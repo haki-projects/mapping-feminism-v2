@@ -1,0 +1,23 @@
+body {
+  padding-top: 70px;
+}
+footer {
+  background-color: #f2f2f2;
+  padding: 25px;
+    }
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+    }
+form a {
+  margin: 30px 10px 30px 10px;
+}
+.card {
+  margin: 50px 10px 50px 10px;
+}
+.has-danger {
+  color: red;
+}
+.btn {
+  margin: 30px 10px 30px 10px;
+}
