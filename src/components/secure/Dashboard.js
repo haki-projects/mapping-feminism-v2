@@ -1,8 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import ProfileCard from '../common/profile_card';
+import BookTable from '../common/book_table';
+import { fetchBooks } from '../../actions/books';
+import _ from 'lodash';
 
 class Dashboard extends React.Component {
+	componentDidMount(){
+		this.props.fetchBooks();
+	}
+
+	 renderBooks() {
+		return _.map(this.props.books, book => {
+			return(
+				<tr>
+					<td>{book.book_title}</td>
+					<td>{book.first_name}</td>
+					<td>{book.last_name}</td>
+					<td>{book.gender}</td>
+					<td>{book.original_publish_date}</td>
+					<td>{book.original_publish_language}</td>
+					<td>{book.original_publisher}</td>
+					<td>{book.translated_publish_date}</td>
+					<td>{book.translated_publish_language}</td>
+					<td>{book.translated_publisher}</td>
+				</tr>
+			);
+		});
+	}
+
+
+
+
 	render() {
 		return (
 			<div className='container-fluid'>
@@ -10,49 +40,31 @@ class Dashboard extends React.Component {
 				<br />
 				<div className='row text-center'>
 					<div className='col-sm-3'>
-						<div className='card card-outline-success'>
-							<div className='card-header'>Your Name </div>
-							<div className="row align-items-center">
-								<div className="col">
-									<img className='profile-pic ' src={require('../../../public/images/dummy_profile.png')} alt='profile'></img>
-								</div>
-							</div>
-							<div className='card-block'>
-							<ul className='list-group list-group-flush'>
-								<li className='list-group-item'>
-									<p className='card-text'>Bio:Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-									Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
-									 dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellen
-										tesque eu, pretium quis, sem. Nulla consequat massa quis enim. </p>
-									</li>
-								<li className='list-group-item'>Member Since: </li>
-								<li className='list-group-item'>Last Logged in: </li>
-							</ul>
-							<div className='row'>
-								<div className='col'># of Entries</div>
-								<div className='col'># of Edits</div>
-								<div className='col'># of Logins</div>
-							</div>
-							<div className='row'>
-								<Link to='/#' className='col'>see more</Link>
-							</div>
-
-						</div>
-
-					</div>
+					<ProfileCard />
 					</div>
 					<div className='col-sm-9 justify-content-center chart-area'>
 						Dashboard charts
 					</div>
-				Add Table Here
 				<br/>
 				<Link to='/profile'>Profile</Link>
 				<br/>
 				<Link to='/logout'>Logout</Link>
 			</div>
+			<div>
+				<BookTable booksData = {this.renderBooks()}/>
+			</div>
+
+
+
+
 			</div>
 		)
 	}
 }
+function mapStateToProps(state) {
+	return {
+		books: state.books
+	};
+}
 
-export default connect()(Dashboard);
+export default connect(mapStateToProps, { fetchBooks })(Dashboard);

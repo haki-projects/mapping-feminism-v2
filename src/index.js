@@ -4,15 +4,17 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
-import { requireAuth } from './utils/secure';
-import * as reducers from './reducers'
-import App from './components/App'
-import Home from './components/Home'
-import Login from './components/auth/Login'
-import Register from './components/auth/Register'
-import Logout from './components/auth/Logout'
-import Dashboard from './components/secure/Dashboard'
-import Profile from './components/secure/Profile'
+import { requireAuth, requireAuthAndAdmin } from './utils/secure';
+import * as reducers from './reducers';
+import App from './components/App';
+import Home from './components/Home';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Logout from './components/auth/Logout';
+import Dashboard from './components/secure/Dashboard';
+import Profile from './components/secure/Profile';
+import thunk from 'redux-thunk';
+
 
 const reducer = combineReducers({
 	...reducers,
@@ -24,13 +26,15 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
 	reducer,
-	composeEnhancers(applyMiddleware(routerMiddleware(browserHistory)))
+	composeEnhancers(applyMiddleware(thunk,routerMiddleware(browserHistory)))
 );
 
 const history = syncHistoryWithStore(browserHistory, store);
 
 const secure = requireAuth(store);
+const adminOnly = requireAuthAndAdmin(store);
 
+//TODO: SET UP ROUTE FOR ADMINISTRATORS ONLY, AND ADD AN onEnter={adminOnly} to the route
 ReactDOM.render(
 	<Provider store={store}>
 		<Router history={history}>
