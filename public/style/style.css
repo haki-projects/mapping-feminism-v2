@@ -21,3 +21,15 @@ form a {
 .btn {
   margin: 30px 10px 30px 10px;
 }
+.profile-pic {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 30%;
+  margin-top:10px;
+
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
