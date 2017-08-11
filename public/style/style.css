@@ -33,3 +33,13 @@ form a {
   background-position: center center;
   background-size: cover;
 }
+.chart-area {
+  background-color: lightgray;
+}
+.container-fluid {
+  margin-left: 30px!important;
+  margin-right: 30px!important;
+}
+.card-outline-success {
+  border-color:#49cc90!important;
+}

@@ -5,11 +5,12 @@ import { Link } from 'react-router';
 class Dashboard extends React.Component {
 	render() {
 		return (
-			<div className='container'>
+			<div className='container-fluid'>
 				<h1 className='text-center'>Your Dashboard</h1>
+				<br />
 				<div className='row text-center'>
-					<div className='col-sm-4'>
-						<div className='card'>
+					<div className='col-sm-3'>
+						<div className='card card-outline-success'>
 							<div className='card-header'>Your Name </div>
 							<div className="row align-items-center">
 								<div className="col">
@@ -40,10 +41,10 @@ class Dashboard extends React.Component {
 
 					</div>
 					</div>
-					<div className='col-sm-8 justify-content-center'>
+					<div className='col-sm-9 justify-content-center chart-area'>
 						Dashboard charts
 					</div>
-				Welcome
+				Add Table Here
 				<br/>
 				<Link to='/profile'>Profile</Link>
 				<br/>
