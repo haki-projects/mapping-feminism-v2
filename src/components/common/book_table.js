@@ -23,6 +23,7 @@ class BookTable extends Component{
               <th>Translated Publish Date</th>
               <th>Translated Publish Language</th>
               <th>Translated Publisher</th>
+              <th> Edit Record </th>
 						</tr>
           </thead>
           <tbody>{this.props.booksData}</tbody>

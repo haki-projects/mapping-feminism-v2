@@ -17,3 +17,7 @@ export function fetchBooks() {
     })
   }
 }
+
+export function fetchBook(id) {
+
+}

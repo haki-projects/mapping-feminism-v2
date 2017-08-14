@@ -12,7 +12,7 @@ class Home extends React.Component {
         <h1 className="display-3">Mapping Feminism</h1>
         <p>Discover how feminist theory has evolved</p>
 
-				<Link to='/login' className='btn btn-primary btn-lg'>Login</Link>
+				<Link to='/login' className='btn btn-primary btn-lg login'>Login</Link>
 				<Link to='/register' className='btn btn-success btn-lg'>Register</Link>
       </div>
     </div>

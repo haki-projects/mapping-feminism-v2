@@ -45,6 +45,7 @@ ReactDOM.render(
 				<Route path='logout' component={Logout}/>
 				<Route path='dashboard' component={Dashboard} onEnter={secure}/>
 				<Route path='profile' component={Profile} onEnter={secure}/>
+				<Route path='books/:id' component={Profile} onEnter={secure}/>
 			</Route>
 		</Router>
 	</Provider>,
