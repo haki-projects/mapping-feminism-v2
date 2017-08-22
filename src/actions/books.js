@@ -18,6 +18,9 @@ export function fetchBooks() {
   }
 }
 
-export function fetchBook(id) {
-
+export function fetchBook(book) {
+return {
+  type: FETCH_A_BOOK,
+  current_book: book
+};
 }

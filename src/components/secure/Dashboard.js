@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import ProfileCard from '../common/profile_card';
 import BookTable from '../common/book_table';
-import { fetchBooks } from '../../actions/books';
+import { fetchBooks, fetchBook } from '../../actions/books';
 import { Modal, Button } from 'react-bootstrap';
 import _ from 'lodash';
 
@@ -19,12 +19,8 @@ class Dashboard extends React.Component {
 	}
 
 	onViewClick(book) {
-
-		this.setState({
-			current_book: book,
-			showModal: true
-		});
-		// set this book as the current book on the component state state, then instantiate the modal
+		console.log('inside view click', book);
+		this.props.fetchBook(book);
 	}
 	onDeleteClick(book) {
 
@@ -75,6 +71,7 @@ class Dashboard extends React.Component {
 				<Link to='/logout'>Logout</Link>
 				<h1 className='text-center'>Your Dashboard</h1>
 				<br />
+
 				<div className='row text-center'>
 					<div className='col-sm-3'>
 					<ProfileCard />
@@ -84,8 +81,8 @@ class Dashboard extends React.Component {
 					</div>
 				<br/>
 			</div>
-			<div>
-				<BookTable booksData={this.renderBooks()}/>
+			<div className='modal-container'>
+				<BookTable  booksData={this.renderBooks()}/>
 			</div>
 
 			<Modal show={this.state.showModal} onHide={this.close}>
@@ -110,8 +107,9 @@ class Dashboard extends React.Component {
 }
 function mapStateToProps(state) {
 	return {
-		books: state.books
+		books: state.books,
+		current_book: state.book
 	};
 }
 
-export default connect(mapStateToProps, { fetchBooks })(Dashboard);
+export default connect(mapStateToProps, { fetchBooks, fetchBook })(Dashboard);

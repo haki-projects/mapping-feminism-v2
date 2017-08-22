@@ -43,3 +43,9 @@ form a {
 .card-outline-success {
   border-color:#49cc90!important;
 }
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}

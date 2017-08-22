@@ -1,2 +1,2 @@
 export { auth } from './auth';
-export { books } from './books';
+export { books, current_book } from './books';

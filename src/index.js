@@ -12,13 +12,15 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Logout from './components/auth/Logout';
 import Dashboard from './components/secure/Dashboard';
+import BookShow from './components/secure/show_book';
 import Profile from './components/secure/Profile';
 import thunk from 'redux-thunk';
 
 
 const reducer = combineReducers({
 	...reducers,
-	routing: routerReducer
+	routing: routerReducer,
+
 });
 
 //noinspection JSUnresolvedVariable
@@ -43,9 +45,10 @@ ReactDOM.render(
 				<Route path='login' component={Login}/>
 				<Route path='register' component={Register}/>
 				<Route path='logout' component={Logout}/>
+				<Route path='/dashboard/books/:id' component={BookShow} onEnter={secure}/>
 				<Route path='dashboard' component={Dashboard} onEnter={secure}/>
 				<Route path='profile' component={Profile} onEnter={secure}/>
-				<Route path='books/:id' component={Profile} onEnter={secure}/>
+
 			</Route>
 		</Router>
 	</Provider>,
