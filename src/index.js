@@ -13,6 +13,7 @@ import Register from './components/auth/Register';
 import Logout from './components/auth/Logout';
 import Dashboard from './components/secure/Dashboard';
 import BookShow from './components/secure/show_book';
+import BookEdit from './components/secure/edit_book';
 import Profile from './components/secure/Profile';
 import thunk from 'redux-thunk';
 
@@ -20,6 +21,7 @@ import thunk from 'redux-thunk';
 const reducer = combineReducers({
 	...reducers,
 	routing: routerReducer,
+
 
 });
 
@@ -45,7 +47,8 @@ ReactDOM.render(
 				<Route path='login' component={Login}/>
 				<Route path='register' component={Register}/>
 				<Route path='logout' component={Logout}/>
-				<Route path='/dashboard/books/:id' component={BookShow} onEnter={secure}/>
+				<Route path='/dashboard/books/view/:id' component={BookShow} onEnter={secure}/>
+				<Route path='/dashboard/books/edit/:id' component={BookEdit} onEnter={secure}/>
 				<Route path='dashboard' component={Dashboard} onEnter={secure}/>
 				<Route path='profile' component={Profile} onEnter={secure}/>
 

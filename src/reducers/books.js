@@ -13,11 +13,11 @@ export function books(state = {}, action) {
 }
 
 export function current_book(state = {}, action) {
-
+  console.log(action);
   switch (action.type) {
+
     case FETCH_A_BOOK:
-    console.log(action);
-    return action.current_book;
+    return null;
 
     default:
     return state;

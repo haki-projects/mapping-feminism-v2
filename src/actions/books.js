@@ -18,9 +18,9 @@ export function fetchBooks() {
   }
 }
 
-export function fetchBook(book) {
+export function fetchBook(id) {
 return {
   type: FETCH_A_BOOK,
-  current_book: book
+  book_id: id
 };
 }

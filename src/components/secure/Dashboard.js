@@ -11,23 +11,40 @@ class Dashboard extends React.Component {
 	constructor(props){
     super(props);
     this.state = {
-			showModal: false,
-			current_book: {} };
+			hasRights: true };
   }
 	componentDidMount(){
 		this.props.fetchBooks();
+		//set the state hasRights function
 	}
 
 	onViewClick(book) {
-		console.log('inside view click', book);
-		this.props.fetchBook(book);
+		this.props.router.push(`/dashboard/books/view/${book.id}`);
+
 	}
 	onDeleteClick(book) {
+		console.log('insite delete button', book);
 
 	}
 	onEditClick(book) {
+		console.log('insite edit button', book);
+		this.props.router.push(`/dashboard/books/edit/${book.id}`);
 
 	}
+
+	canEditField(book){
+		if(this.state.hasRights) {
+			return ( <div>
+				<button className='btn btn-link btn-sm' onClick={this.onEditClick.bind(this, book)}>Edit</button>
+				<button className='btn btn-link btn-sm' onClick={this.onDeleteClick.bind(this,book)}>Delete</button>
+				</div>
+			)
+		}
+		return ( <div></div>
+		)
+
+	}
+
 
 
 	 renderBooks() {
@@ -47,8 +64,7 @@ class Dashboard extends React.Component {
 					<td>{book.translated_publisher}</td>
 					<td className='btn-group' role='group'>
 						<button className='btn btn-link btn-sm' onClick={this.onViewClick.bind(this, book)}>View</button>
-						<button className='btn btn-link btn-sm' onClick={this.onEditClick.bind(this, book.id)}>Edit</button>
-						<button className='btn btn-link btn-sm' onClick={this.onDeleteClick.bind(this, book.id)}>Delete</button>
+					{this.canEditField(book)}
 					</td>
 				</tr>
 
@@ -56,9 +72,6 @@ class Dashboard extends React.Component {
 		});
 	}
 
-	close(){
-		this.setState({ showModal: false});
-	}
 
 
 
@@ -85,21 +98,6 @@ class Dashboard extends React.Component {
 				<BookTable  booksData={this.renderBooks()}/>
 			</div>
 
-			<Modal show={this.state.showModal} onHide={this.close}>
-			<Modal.Header closeButton>
-				<Modal.Title>Modal heading</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-
-				<p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-			</Modal.Body>
-			<Modal.Footer>
-
-			</Modal.Footer>
-		</Modal>
-
-
-
 
 			</div>
 		)
@@ -108,7 +106,7 @@ class Dashboard extends React.Component {
 function mapStateToProps(state) {
 	return {
 		books: state.books,
-		current_book: state.book
+		current_book: state.current_book
 	};
 }
 
