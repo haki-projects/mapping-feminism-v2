@@ -52,16 +52,14 @@ class Dashboard extends React.Component {
 			return(
 
 				<tr key={book.id}>
-					<td>{book.book_title}</td>
-					<td>{book.first_name}</td>
-					<td>{book.last_name}</td>
-					<td>{book.gender}</td>
-					<td>{book.original_publish_date}</td>
-					<td>{book.original_publish_language}</td>
-					<td>{book.original_publisher}</td>
-					<td>{book.translated_publish_date}</td>
-					<td>{book.translated_publish_language}</td>
-					<td>{book.translated_publisher}</td>
+					<td>{book.author_first_name}</td>
+					<td>{book.author_last_name}</td>
+					<td>{book.english_title}</td>
+					<td>{book.english_pub_date}</td>
+					<td>{book.french_title}</td>
+					<td>{book.french_pub_date}</td>
+					<td>{book.created_by}</td>
+
 					<td className='btn-group' role='group'>
 						<button className='btn btn-link btn-sm' onClick={this.onViewClick.bind(this, book)}>View</button>
 					{this.canEditField(book)}
@@ -94,7 +92,8 @@ class Dashboard extends React.Component {
 					</div>
 				<br/>
 			</div>
-			<div className='modal-container'>
+			<div>
+				<Link to='/dashboard/books/create' className='btn btn success'>Add Book </Link>
 				<BookTable  booksData={this.renderBooks()}/>
 			</div>
 

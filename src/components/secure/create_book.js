@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { fetchBooks, reviseBook } from '../../actions/books';
+import { createBook } from '../../actions/books';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import _ from 'lodash';
 
 
-class BookEdit extends Component {
+class BookCreate extends Component {
   constructor(props) {
     super(props);
 
@@ -25,31 +25,16 @@ class BookEdit extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchBooks();
+
   }
   handleSubmit(event) {
 		event.preventDefault();
     console.log('handled submit', event);
-    //Send message on screen to let user know the system is working
-    const revisedBook = this.createRevisedBook();
-    this.props.reviseBook(revisedBook);
-
-    //pass new book object to Action for updating books
-  }
-  createRevisedBook() {
-   const stateBook = this.state.book;
-   const propsBook = this.props.current_book;
-   const newBookValues= stateBook;
-
-   _.forOwn(stateBook, function(value, key){
-    if(!value) {
-      var copyValue = propsBook[key];
-      newBookValues[key] = propsBook[key];
-      }
-   });
-   return newBookValues;
+    const newBook = this.state.book;
+    this.props.createBook(newBook);
 
   }
+
   onInputChange(name, event) {
   let book = Object.assign({}, this.state.book);
   book[name] = event.target.value;
@@ -57,10 +42,7 @@ class BookEdit extends Component {
 	}
 
   render() {
-    if(!this.props.current_book){
-      return <div className='container text-center'> loading....</div>
-    }
-   const  book  = this.props.current_book;
+
 
 
     return(
@@ -68,8 +50,7 @@ class BookEdit extends Component {
       <div className='container'>
         <div className='card'>
           <h3 className='card-header'>
-            Title: {book.book_title} <br />
-            Author: {book.first_name + ' ' + book.last_name}</h3>
+            Create New Book Record</h3>
           <div className='card-block'>
 
           <form onSubmit={this.handleSubmit.bind(this)}>
@@ -78,13 +59,13 @@ class BookEdit extends Component {
               <label className='mb-2 mr-sm-2 mb-sm-0'>Author First Name</label>
                 <input type='text'
                         className='form-control mb-2 mr-sm-2 mb-sm-0'
-                        placeholder={book.author_first_name}
+                        placeholder= ''
                         value={this.state.book.author_first_name}
                         onChange={this.onInputChange.bind(this,'author_first_name')} />
               <label className='mb-2 mr-sm-2 mb-sm-0'>Author last Name</label>
                 <input type='text'
                         className='form-control mb-2 mr-sm-2 mb-sm-0'
-                        placeholder={book.author_last_name}
+                        placeholder= ''
                         value={this.state.book.author_last_name}
                         onChange={this.onInputChange.bind(this,'author_last_name')} />
                 </div>
@@ -93,7 +74,7 @@ class BookEdit extends Component {
                 <label>English Title </label>
                 <input type='text'
                       className='form-control'
-                      placeholder={book.english_title}
+                      placeholder= ''
                       value={this.state.book.english_title}
                       onChange={this.onInputChange.bind(this,'english_title')}/>
               </div>
@@ -102,32 +83,39 @@ class BookEdit extends Component {
                   <label>French Title</label>
                   <input type='text'
                           className='form-control'
-                          placeholder={book.french_title}
+                          placeholder= ''
                           value={this.state.book.french_title}
                           onChange={this.onInputChange.bind(this, 'french_title')} />
                 </div>
 
-                <div className='form-group'>
-                <label>French Publication Date</label>
-                <input type='date'
-                        className='form-control'
-                        placeholder={book.french_pub_date}
-                        value={this.state.book.french_pub_date}
-                        onChange={this.onInputChange.bind(this, 'french_pub_date')} />
-              </div>
 
-              <div className='form-group'>
-              <label>English Publication Date</label>
-              <input type='text'
-                      className='form-control'
-                      placeholder={book.english_pub_date}
-                      value={this.state.book.english_pub_date}
-                      onChange={this.onInputChange.bind(this, 'english_pub_date')} />
-            </div>
             <hr />
 
+            <div className='form-group'>
+            <label>French Publication Date</label>
+            <input type='text'
+                    className='form-control'
+                    placeholder= ''
+                    value={this.state.book.french_pub_date}
+                    onChange={this.onInputChange.bind(this, 'french_pub_date')} />
+          </div>
 
-        <button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0'>Save</button>
+          <div className='form-group'>
+          <label>English Publication Date</label>
+          <input type='text'
+                  className='form-control'
+                  placeholder= ''
+                  value={this.state.book.english_pub_date}
+                  onChange={this.onInputChange.bind(this, 'english_pub_date')} />
+        </div>
+
+
+
+
+
+
+
+        <button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0'>Create</button>
         <Link className='btn btn-primary ' to='/dashboard'>Back </Link>
         <Link className='btn btn-danger ' to='/dashboard'>Cancel </Link>
         </form>
@@ -142,12 +130,12 @@ class BookEdit extends Component {
   };
 }
 
-function mapStateToProps({ books }, ownProps){
-const id = ownProps.params.id;
+function mapStateToProps({ books }){
+
   return {
-    books,
-    current_book: books[id]
+    books
+
   };
 }
 
-export default connect(mapStateToProps, { fetchBooks, reviseBook} )(BookEdit);
+export default connect(mapStateToProps, {createBook})(BookCreate);

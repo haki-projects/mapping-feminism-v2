@@ -13,16 +13,13 @@ class BookTable extends Component{
         <table className='table table-sm'>
 					<thead>
 						<tr>
-							<th>Original Title</th>
-							<th>First Name</th>
-              <th>Last Name</th>
-              <th>Gender</th>
-              <th>Original Publish Date</th>
-              <th>Original Publish Language</th>
-              <th>Original Publisher</th>
-              <th>Translated Publish Date</th>
-              <th>Translated Publish Language</th>
-              <th>Translated Publisher</th>
+							<th>Author First Name</th>
+							<th>Author Last Name</th>
+              <th>English Title</th>
+              <th>English Publication Date</th>
+              <th>French Title</th>
+              <th>French Publication Date</th>
+              <th>Created By</th>
               <th> Edit Record </th>
 						</tr>
           </thead>
