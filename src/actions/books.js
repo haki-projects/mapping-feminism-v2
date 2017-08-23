@@ -4,6 +4,7 @@ export const FETCH_BOOKS = 'FETCH_BOOKS';
 export const FETCH_A_BOOK = 'FETCH_A_BOOK';
 export const EDIT_BOOK = 'EDIT_BOOK';
 export const DELETE_BOOK = 'DELETE_BOOK';
+export const REVISE_BOOK = 'REVISE_BOOK';
 
 const booksRef = firebase.database().ref('/');
 
@@ -23,4 +24,11 @@ return {
   type: FETCH_A_BOOK,
   book_id: id
 };
+}
+
+export function reviseBook(book) {
+  return {
+    type: REVISE_BOOK,
+    book,
+  }
 }

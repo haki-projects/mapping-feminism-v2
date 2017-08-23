@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchBooks } from '../../actions/books';
+import { fetchBooks, reviseBook } from '../../actions/books';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import _ from 'lodash';
@@ -23,7 +23,9 @@ class BookEdit extends Component {
         translated_publish_date: '',
         translated_publish_language: '',
         translated_publisher: ''
-      }
+      },
+
+      save_status:''
 
     };
   }
@@ -35,6 +37,7 @@ class BookEdit extends Component {
     console.log('handled submit', event);
     //Send message on screen to let user know the system is working
     const revisedBook = this.createRevisedBook();
+    this.props.reviseBook(revisedBook);
 
     //pass new book object to Action for updating books
   }
@@ -182,4 +185,4 @@ const id = ownProps.params.id;
   };
 }
 
-export default connect(mapStateToProps, { fetchBooks} )(BookEdit);
+export default connect(mapStateToProps, { fetchBooks, reviseBook} )(BookEdit);
