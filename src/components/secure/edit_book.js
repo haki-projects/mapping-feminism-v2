@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchBooks, reviseBook } from '../../actions/books';
+import { fetchBooks, reviseBook, deleteBook } from '../../actions/books';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import _ from 'lodash';
@@ -54,7 +54,15 @@ class BookEdit extends Component {
   let book = Object.assign({}, this.state.book);
   book[name] = event.target.value;
   this.setState({book});
-	}
+  }
+
+  onDeleteClick(){
+    console.log("clicked the delete button: " + this.props.current_book.id);
+    this.props.deleteBook(this.props.current_book.id, () => {
+      this.props.router.push('/dashboard');
+    });
+
+  }
 
   render() {
     if(!this.props.current_book){
@@ -68,8 +76,8 @@ class BookEdit extends Component {
       <div className='container'>
         <div className='card'>
           <h3 className='card-header'>
-            Title: {book.book_title} <br />
-            Author: {book.first_name + ' ' + book.last_name}</h3>
+            Title: {book.english_title} <br />
+            Author: {book.author_first_name + ' ' + book.author_last_name}</h3>
           <div className='card-block'>
 
           <form onSubmit={this.handleSubmit.bind(this)}>
@@ -124,13 +132,13 @@ class BookEdit extends Component {
                       value={this.state.book.english_pub_date}
                       onChange={this.onInputChange.bind(this, 'english_pub_date')} />
             </div>
-            <hr />
-
 
         <button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0'>Save</button>
         <Link className='btn btn-primary ' to='/dashboard'>Back </Link>
         <Link className='btn btn-danger ' to='/dashboard'>Cancel </Link>
         </form>
+        <hr />
+        <button className='btn btn-danger btn-sm float-right' onClick={this.onDeleteClick.bind(this)}>Delete Record</button>
 
         </div>
         </div>
@@ -150,4 +158,4 @@ const id = ownProps.params.id;
   };
 }
 
-export default connect(mapStateToProps, { fetchBooks, reviseBook} )(BookEdit);
+export default connect(mapStateToProps, { fetchBooks, reviseBook, deleteBook} )(BookEdit);

@@ -27,7 +27,7 @@ export function reviseBook(book) {
     firebase.database().ref().update(updates, revisedBook => {
       dispatch({
           type: REVISE_BOOK,
-          book,
+          book: book,
       })
     })
   }
@@ -47,12 +47,26 @@ export function createBook(book){
     firebase.database().ref().update(updates, addedBook => {
         dispatch({
             type: CREATE_BOOK,
-            book
+            book: book
           })
     })
-
-
   }
+}
+
+export function deleteBook(id, backToDashboard) {
+var updates = {}; //using an update instead of a .remove() allows us to add more database revisions to this object in the future
+updates['/books/' + id] = null; //sets the location to null, which removes the book
+
+  return (dispatch) => {
+    firebase.database().ref().update(updates, book => {
+      backToDashboard();
+      dispatch({
+        type: DELETE_BOOK,
+        id: id
+      })
+    })
+  }
+
 }
 
 export function fetchBook(id) {

@@ -36,7 +36,6 @@ class Dashboard extends React.Component {
 		if(this.state.hasRights) {
 			return ( <div>
 				<button className='btn btn-link btn-sm' onClick={this.onEditClick.bind(this, book)}>Edit</button>
-				<button className='btn btn-link btn-sm' onClick={this.onDeleteClick.bind(this,book)}>Delete</button>
 				</div>
 			)
 		}
