@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 import { login, logout, resetNext, assignUser } from '../actions/auth';
+import TopNav from './common/navbar';
 import { push } from 'react-router-redux';
 
 class App extends React.Component {
@@ -50,7 +51,7 @@ class App extends React.Component {
 			<div style={ this.styles.app }>
 				{ this.state.loaded ?
 					<div>
-					add Navbar here
+					<TopNav />
 					{this.props.children}
 					</div> : null}
 			</div>

@@ -79,9 +79,6 @@ class Dashboard extends React.Component {
 	render() {
 		return (
 			<div className='container-fluid'>
-				<Link to='/profile'>Profile</Link>
-				<br/>
-				<Link to='/logout'>Logout</Link>
 				<h1 className='text-center'>Your Dashboard</h1>
 				<br />
 
