@@ -6,12 +6,17 @@ import { Link } from 'react-router';
 class ProfileCard extends Component {
 
   render(){
+		if(!this.props.user){
+			return <div>loading user...</div>
+		}
+
+		const { user } = this.props;
 
     return (
 
       <div>
       <div className='card card-outline-success'>
-							<div className='card-header'>Your Name </div>
+							<div className='card-header'>{user.first_name + ' ' + user.last_name}</div>
 							<div className="row align-items-center">
 								<div className="col">
 									<img className='profile-pic rounded-circle' src={require('../../../public/images/dummy_profile.png')} alt='profile'></img>
@@ -20,18 +25,14 @@ class ProfileCard extends Component {
 							<div className='card-block'>
 							<ul className='list-group list-group-flush'>
 								<li className='list-group-item'>
-									<p className='card-text'>Bio:Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-									Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
-									 dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellen
-										tesque eu, pretium quis, sem. Nulla consequat massa quis enim. </p>
+									<p className='card-text'>{user.bio} </p>
 									</li>
-								<li className='list-group-item'>Member Since: </li>
-								<li className='list-group-item'>Last Logged in: </li>
+								<li className='list-group-item'>Member Since: {user.created_on} </li>
+								<li className='list-group-item'>Last Logged in: {user.last_logged_in}</li>
 							</ul>
 							<div className='row'>
-								<div className='col'># of Entries</div>
-								<div className='col'># of Edits</div>
-								<div className='col'># of Logins</div>
+								<div className='col'># of Entries: {user.num_of_entries}</div>
+								<div className='col'># of Edits: {user.num_of_edits}</div>
 							</div>
 							<div className='row'>
 								<Link to='/#' className='col'>see more</Link>

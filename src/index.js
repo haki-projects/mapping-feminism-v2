@@ -53,7 +53,6 @@ ReactDOM.render(
 				<Route path='/dashboard/books/edit/:id' component={BookEdit} onEnter={secure}/>
 				<Route path='dashboard' component={Dashboard} onEnter={secure}/>
 				<Route path='profile' component={Profile} onEnter={secure}/>
-
 			</Route>
 		</Router>
 	</Provider>,

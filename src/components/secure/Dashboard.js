@@ -6,15 +6,18 @@ import BookTable from '../common/book_table';
 import { fetchBooks, fetchBook } from '../../actions/books';
 import { Modal, Button } from 'react-bootstrap';
 import _ from 'lodash';
+import * as firebase from 'firebase';
 
 class Dashboard extends React.Component {
 	constructor(props){
     super(props);
     this.state = {
-			hasRights: true };
+			hasRights: true,
+		current_user: ''};
   }
 	componentDidMount(){
 		this.props.fetchBooks();
+	const user = firebase.auth().currentUser;
 		//set the state hasRights function
 	}
 
@@ -33,15 +36,15 @@ class Dashboard extends React.Component {
 	}
 
 	canEditField(book){
-		if(this.state.hasRights) {
+		const user = this.props.user_details;
+		if (book.created_by == user.email || user.role == 'ADMIN') {
+
 			return ( <div>
 				<button className='btn btn-link btn-sm' onClick={this.onEditClick.bind(this, book)}>Edit</button>
 				</div>
 			)
 		}
-		return ( <div></div>
-		)
-
+		return  <div></div>
 	}
 
 
@@ -84,7 +87,7 @@ class Dashboard extends React.Component {
 
 				<div className='row text-center'>
 					<div className='col-sm-3'>
-					<ProfileCard />
+					<ProfileCard user = {this.props.user_details}/>
 					</div>
 					<div className='col-sm-8 justify-content-center chart-area card'>
 						Dashboard charts
@@ -104,7 +107,8 @@ class Dashboard extends React.Component {
 function mapStateToProps(state) {
 	return {
 		books: state.books,
-		current_book: state.current_book
+		current_book: state.current_book,
+		user_details: state.auth.user_details
 	};
 }
 

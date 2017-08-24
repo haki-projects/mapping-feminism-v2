@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
-import { login, logout, resetNext } from '../actions/auth';
+import { login, logout, resetNext, assignUser } from '../actions/auth';
 import { push } from 'react-router-redux';
 
 class App extends React.Component {
@@ -28,6 +28,7 @@ class App extends React.Component {
 		firebase.auth().onAuthStateChanged(user => {
 			if (user) {
 				this.props.onLogin(user);
+				this.props.assignUserDetails(user)
 				this.props.onRedirect(this.props.next || '/dashboard');
 				this.props.onResetNext();
 			} else {
@@ -47,7 +48,11 @@ class App extends React.Component {
 	render() {
 		return (
 			<div style={ this.styles.app }>
-				{ this.state.loaded ? this.props.children : null}
+				{ this.state.loaded ?
+					<div>
+					add Navbar here
+					{this.props.children}
+					</div> : null}
 			</div>
 		)
 	}
@@ -56,6 +61,9 @@ class App extends React.Component {
 export default connect(state => ({ next: state.auth.next, user: state.auth.user }), dispatch => ({
 	onLogin: user => {
 		dispatch(login(user));
+	},
+	assignUserDetails: user => {
+		dispatch(assignUser(user)); //action to assign user details to user
 	},
 	onLogout: () => {
 		dispatch(logout());

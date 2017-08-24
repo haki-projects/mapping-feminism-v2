@@ -28,10 +28,13 @@ class BookCreate extends Component {
 
   }
   handleSubmit(event) {
-		event.preventDefault();
-    console.log('handled submit', event);
+    event.preventDefault();
+    //disable button and change wording to saving
+
     const newBook = this.state.book;
+    newBook.created_by = this.props.user.email;
     this.props.createBook(newBook);
+    //enable button and clear contents
 
   }
 
@@ -130,10 +133,11 @@ class BookCreate extends Component {
   };
 }
 
-function mapStateToProps({ books }){
+function mapStateToProps(state, { books }){
 
   return {
-    books
+    books,
+    user: state.auth.user_details
 
   };
 }

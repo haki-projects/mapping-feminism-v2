@@ -18,10 +18,10 @@ class BookShow extends Component {
 
 
   render() {
-    if(!this.props.current_book){
+    if(!this.props.book){
       return <div className='container text-center'> loading....</div>
     }
-   const  book  = this.props.current_book;
+   const { book } = this.props;
 
 
     return(
@@ -29,20 +29,15 @@ class BookShow extends Component {
       <div className='container'>
         <div className='card'>
           <h3 className='card-header'>
-            Title: {book.book_title} <br />
-            Author: {book.first_name + ' ' + book.last_name}</h3>
+            Title: {book.english_title} <br />
+            </h3>
           <div className='card-block'>
 
             <div className='card-text'>
-
-              Original Language: {book.original_publish_language} <br />
-              Original Publishing Date: {book.original_publish_date} <br />
-              Original Publisher: {book.original_publisher} <br />
-              <hr />
-
-              Translated Language: {book.translated_publish_language} <br />
-              Translated Publishing Date: {book.translated_publish_date} <br />
-              Translated Publisher: {book.translated_publisher}
+              Author: {book.author_first_name + ' ' + book.author_last_name} <br />
+              French Title: {book.french_title} <br />
+              French Publication Date: {book.french_pub_date} <br />
+              English Publication Date: {book.english_pub_date} <br />
             </div>
           </div>
         <div className='card-footer'><Link className='btn btn-primary' to='/dashboard'>Back </Link> </div>
@@ -59,7 +54,7 @@ function mapStateToProps({ books }, ownProps){
 const id = ownProps.params.id;
   return {
     books,
-    current_book: books[id]
+    book: books[id]
   };
 }
 

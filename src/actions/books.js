@@ -40,7 +40,6 @@ export function createBook(book){
   var updates = {};
   var newBookKey = firebase.database().ref().child('books').push().key;
   book.id = newBookKey;
-  book.created_by= 'Robbie';
   updates['/books/' + newBookKey] = book;
 
   return (dispatch) => {

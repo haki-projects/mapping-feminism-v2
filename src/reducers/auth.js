@@ -2,7 +2,8 @@ import * as AuthActions from '../actions/auth';
 
 const initialState = {
 	user: null,
-	next: null
+	next: null,
+	user_details: null
 };
 
 export function auth(state = initialState, action) {
@@ -11,9 +12,16 @@ export function auth(state = initialState, action) {
 			return Object.assign({}, state, {
 				user: action.user
 			});
+
+		case AuthActions.ASSIGN_USER_DETAILS:
+			return Object.assign({}, state, {
+				user_details: action.user_details
+			});
+
 		case AuthActions.LOGOUT:
 			return Object.assign({}, state, {
-				user: null
+				user: null,
+				user_details: null
 			});
 
 		case AuthActions.SET_NEXT:
