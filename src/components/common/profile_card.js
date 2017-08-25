@@ -34,9 +34,7 @@ class ProfileCard extends Component {
 								<div className='col'># of Entries: {user.num_of_entries}</div>
 								<div className='col'># of Edits: {user.num_of_edits}</div>
 							</div>
-							<div className='row'>
-								<Link to='/#' className='col'>see more</Link>
-							</div>
+
 
 						</div>
 

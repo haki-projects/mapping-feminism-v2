@@ -46,6 +46,10 @@ class Dashboard extends React.Component {
 		}
 		return  <div></div>
 	}
+	canAddAuthor(){
+		const user = this.props.user_details;
+
+	}
 
 
 
@@ -77,6 +81,7 @@ class Dashboard extends React.Component {
 
 
 	render() {
+
 		return (
 			<div className='container-fluid'>
 				<h1 className='text-center'>Your Dashboard</h1>
@@ -92,6 +97,7 @@ class Dashboard extends React.Component {
 				<br/>
 			</div>
 			<div>
+
 				<Link to='/dashboard/books/create' className='btn btn success'>Add Book </Link>
 				<BookTable  booksData={this.renderBooks()}/>
 			</div>
