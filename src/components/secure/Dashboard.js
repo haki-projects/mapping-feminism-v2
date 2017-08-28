@@ -81,6 +81,9 @@ class Dashboard extends React.Component {
 
 
 	render() {
+		// only Elizabeth can create new records with the "add author" button
+		//students will only be able to revise the records she has created by selecting it from a list
+		//only one student can enter a record. once the 'created by' field is filled in, the "edit" button should disappear.
 
 		return (
 			<div className='container-fluid'>

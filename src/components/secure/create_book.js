@@ -12,12 +12,17 @@ class BookCreate extends Component {
     this.state =  {
       book: {
         id: '',
-        english_title: '',
-        french_title: '',
-        english_pub_date: '',
-        french_pub_date: '',
+        original_title: '',
+        translation_title: '',
+        translator: '',
+        original_pub_date: '',
+        translation_pub_date: '',
         author_first_name: '',
-        author_last_name: ''
+        author_last_name: '',
+        revised_by:'',
+        translation_gap: '',
+        verified: '',
+        original_lang: ''
       },
 
       save_status:''
@@ -74,43 +79,62 @@ class BookCreate extends Component {
                 </div>
 
                 <div className='form-group'>
-                <label>English Title </label>
+                <label>Original Title </label>
                 <input type='text'
                       className='form-control'
                       placeholder= ''
-                      value={this.state.book.english_title}
-                      onChange={this.onInputChange.bind(this,'english_title')}/>
+                      value={this.state.book.original_title}
+                      onChange={this.onInputChange.bind(this,'original_title')}/>
               </div>
 
                 <div className='form-group'>
-                  <label>French Title</label>
+                  <label>Translation Title</label>
                   <input type='text'
                           className='form-control'
                           placeholder= ''
-                          value={this.state.book.french_title}
-                          onChange={this.onInputChange.bind(this, 'french_title')} />
+                          value={this.state.book.translation_title}
+                          onChange={this.onInputChange.bind(this, 'translation_title')} />
                 </div>
 
 
             <hr />
 
             <div className='form-group'>
-            <label>French Publication Date</label>
+            <label>Translator</label>
             <input type='text'
                     className='form-control'
                     placeholder= ''
-                    value={this.state.book.french_pub_date}
-                    onChange={this.onInputChange.bind(this, 'french_pub_date')} />
+                    value={this.state.book.translator_title}
+                    onChange={this.onInputChange.bind(this, 'translator')} />
+          </div>
+
+            <div className='form-group'>
+            <label>Translation Publication Date</label>
+            <input type='date'
+                    className='form-control'
+                    placeholder= ''
+                    value={this.state.book.translation_pub_date}
+                    onChange={this.onInputChange.bind(this, 'translation_pub_date')} />
           </div>
 
           <div className='form-group'>
-          <label>English Publication Date</label>
-          <input type='text'
+          <label>Original Publication Date</label>
+          <input type='date'
                   className='form-control'
                   placeholder= ''
-                  value={this.state.book.english_pub_date}
-                  onChange={this.onInputChange.bind(this, 'english_pub_date')} />
+                  value={this.state.book.original_pub_date}
+                  onChange={this.onInputChange.bind(this, 'original_pub_date')} />
         </div>
+
+        <div className='form-group'>
+        <label>Original Language</label>
+          <select className= 'custom-select'
+              onChange={this.onInputChange.bind(this, 'original_lang')}>
+            <option defaultValue> Choose ...</option>
+            <option value='French'>French </option>
+            <option value='English'>English</option>
+           </select>
+      </div>
 
 
 
