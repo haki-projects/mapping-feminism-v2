@@ -12,12 +12,15 @@ class BookEdit extends Component {
     this.state =  {
       book: {
         id: '',
-        english_title: '',
-        french_title: '',
-        english_pub_date: '',
-        french_pub_date: '',
+        translation_title: '',
+        translator: '',
+        original_lang: '',
+        original_title: '',
+        translation_pub_date: '',
+        original_pub_date: '',
         author_first_name: '',
-        author_last_name: ''
+        author_last_name: '',
+        verified:''
       },
 
       save_status:''
@@ -29,7 +32,8 @@ class BookEdit extends Component {
   }
   handleSubmit(event) {
 		event.preventDefault();
-    console.log('handled submit', event);
+
+
     //Send message on screen to let user know the system is working
     const revisedBook = this.createRevisedBook();
     this.props.reviseBook(revisedBook);
@@ -47,6 +51,9 @@ class BookEdit extends Component {
       newBookValues[key] = propsBook[key];
       }
    });
+   newBookValues.revised_by = this.props.user_details.email;
+   newBookValues.translation_gap = this.calculateTranslationGap(newBookValues);
+   //add logic for revised notification
    return newBookValues;
 
   }
@@ -56,12 +63,34 @@ class BookEdit extends Component {
   this.setState({book});
   }
 
+  calculateTranslationGap(book){
+    //strip the two strings and turn them into numbers, subtract and return the number
+    if( book.original_pub_date && book.translation_pub_date){
+      const originalDate = parseInt(book.original_pub_date.slice(0,4));
+      const translationDate = parseInt(book.translation_pub_date.slice(0,4));
+      return translationDate - originalDate;
+    }
+    return 0;
+  }
+
   onDeleteClick(){
     console.log("clicked the delete button: " + this.props.current_book.id);
     this.props.deleteBook(this.props.current_book.id, () => {
       this.props.router.push('/dashboard');
     });
 
+  }
+
+  canDelete(){
+    const user = this.props.user_details;
+    if(user) {
+      if(user.role === 'ADMIN'){
+        return (
+          <button className='btn btn-danger btn-sm float-right' onClick={this.onDeleteClick.bind(this)}>Delete Record</button>
+        )
+      }
+    }
+    return <div></div>
   }
 
   render() {
@@ -76,11 +105,24 @@ class BookEdit extends Component {
       <div className='container'>
         <div className='card'>
           <h3 className='card-header'>
-            Title: {book.english_title} <br />
+            Title: {book.original_title} <br />
             Author: {book.author_first_name + ' ' + book.author_last_name}</h3>
           <div className='card-block'>
 
           <form onSubmit={this.handleSubmit.bind(this)}>
+
+          {this.props.user_details.role == 'ADMIN' ? ( <div>
+            <label className='mb-2 mr-sm-2 mb-sm-0'>Verified?</label>
+            <select className= 'custom-select'
+                onChange={this.onInputChange.bind(this, 'verified')}>
+              <option defaultValue disabled>{book.verified}</option>
+              <option value={true}>Yes </option>
+              <option value={false}>No</option>
+             </select>
+             <br />
+             <br />
+              </div>):(<div></div>)}
+
 
               <div className='form-inline'>
               <label className='mb-2 mr-sm-2 mb-sm-0'>Author First Name</label>
@@ -95,42 +137,62 @@ class BookEdit extends Component {
                         placeholder={book.author_last_name}
                         value={this.state.book.author_last_name}
                         onChange={this.onInputChange.bind(this,'author_last_name')} />
+
+
                 </div>
 
                 <div className='form-group'>
-                <label>English Title </label>
+                <label>Original Title </label>
                 <input type='text'
                       className='form-control'
-                      placeholder={book.english_title}
-                      value={this.state.book.english_title}
-                      onChange={this.onInputChange.bind(this,'english_title')}/>
+                      placeholder={book.original_title}
+                      value={this.state.book.original_title}
+                      onChange={this.onInputChange.bind(this,'original_title')}/>
               </div>
 
                 <div className='form-group'>
-                  <label>French Title</label>
+                  <label>Translation Title</label>
                   <input type='text'
                           className='form-control'
-                          placeholder={book.french_title}
-                          value={this.state.book.french_title}
-                          onChange={this.onInputChange.bind(this, 'french_title')} />
+                          placeholder={book.translation_title}
+                          value={this.state.book.translation_title}
+                          onChange={this.onInputChange.bind(this, 'translation_title')} />
                 </div>
 
                 <div className='form-group'>
-                <label>French Publication Date</label>
+                <label>Original Language</label>
+                <input type='text'
+                        className='form-control'
+                        placeholder={book.original_lang}
+                        value={this.state.book.original_lang}
+                        onChange={this.onInputChange.bind(this, 'original_lang')} />
+              </div>
+
+                <div className='form-group'>
+                <label>Translator</label>
+                <input type='text'
+                        className='form-control'
+                        placeholder={book.translator}
+                        value={this.state.book.translator}
+                        onChange={this.onInputChange.bind(this, 'translator')} />
+              </div>
+
+                <div className='form-group'>
+                <label>Translation Publication Date</label>
                 <input type='date'
                         className='form-control'
-                        placeholder={book.french_pub_date}
-                        value={this.state.book.french_pub_date}
-                        onChange={this.onInputChange.bind(this, 'french_pub_date')} />
+                        placeholder={book.translation_pub_date}
+                        value={this.state.book.translation_pub_date}
+                        onChange={this.onInputChange.bind(this, 'translation_pub_date')} />
               </div>
 
               <div className='form-group'>
-              <label>English Publication Date</label>
-              <input type='text'
+              <label>Original Publication Date</label>
+              <input type='date'
                       className='form-control'
-                      placeholder={book.english_pub_date}
-                      value={this.state.book.english_pub_date}
-                      onChange={this.onInputChange.bind(this, 'english_pub_date')} />
+                      placeholder={book.original_pub_date}
+                      value={this.state.book.original_pub_date}
+                      onChange={this.onInputChange.bind(this, 'original_pub_date')} />
             </div>
 
         <button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0'>Save</button>
@@ -138,7 +200,8 @@ class BookEdit extends Component {
         <Link className='btn btn-danger ' to='/dashboard'>Cancel </Link>
         </form>
         <hr />
-        <button className='btn btn-danger btn-sm float-right' onClick={this.onDeleteClick.bind(this)}>Delete Record</button>
+        {this.canDelete()}
+
 
         </div>
         </div>
@@ -150,11 +213,12 @@ class BookEdit extends Component {
   };
 }
 
-function mapStateToProps({ books }, ownProps){
+function mapStateToProps(state, ownProps){
 const id = ownProps.params.id;
   return {
-    books,
-    current_book: books[id]
+    books: state.books,
+    current_book: state.books[id],
+    user_details: state.auth.user_details
   };
 }
 

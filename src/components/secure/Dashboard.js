@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
 
 	canEditField(book){
 		const user = this.props.user_details;
-		if (book.created_by == user.email || user.role == 'ADMIN') {
+		if (book.created_by == user.email || user.role == 'ADMIN' || user.revised_by == user.email) {
 
 			return ( <div>
 				<button className='btn btn-link btn-sm' onClick={this.onEditClick.bind(this, book)}>Edit</button>
@@ -48,6 +48,14 @@ class Dashboard extends React.Component {
 	}
 	canAddAuthor(){
 		const user = this.props.user_details;
+	if (user){
+		if(user.role == 'ADMIN'){
+			return (
+				<Link to='/dashboard/books/create' className='btn btn success'>Add Book </Link>
+			)
+		}
+	}
+	return <div>loading ... </div>
 
 	}
 
@@ -60,10 +68,12 @@ class Dashboard extends React.Component {
 				<tr key={book.id}>
 					<td>{book.author_first_name}</td>
 					<td>{book.author_last_name}</td>
-					<td>{book.english_title}</td>
-					<td>{book.english_pub_date}</td>
-					<td>{book.french_title}</td>
-					<td>{book.french_pub_date}</td>
+					<td>{book.original_title}</td>
+					<td>{book.original_pub_date}</td>
+					<td>{book.original_lang}</td>
+					<td>{book.translation_title}</td>
+					<td>{book.translation_pub_date}</td>
+					<td>{book.translator}</td>
 					<td>{book.created_by}</td>
 
 					<td className='btn-group' role='group'>
@@ -90,6 +100,8 @@ class Dashboard extends React.Component {
 				<h1 className='text-center'>Your Dashboard</h1>
 				<br />
 
+
+
 				<div className='row text-center'>
 					<div className='col-sm-3'>
 					<ProfileCard user = {this.props.user_details}/>
@@ -101,7 +113,7 @@ class Dashboard extends React.Component {
 			</div>
 			<div>
 
-				<Link to='/dashboard/books/create' className='btn btn success'>Add Book </Link>
+			{this.canAddAuthor()}
 				<BookTable  booksData={this.renderBooks()}/>
 			</div>
 

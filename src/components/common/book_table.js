@@ -15,10 +15,12 @@ class BookTable extends Component{
 						<tr>
 							<th>Author First Name</th>
 							<th>Author Last Name</th>
-              <th>English Title</th>
-              <th>English Publication Date</th>
-              <th>French Title</th>
-              <th>French Publication Date</th>
+              <th>Original Title</th>
+              <th>Original Publication Date</th>
+              <th>Original Language</th>
+              <th>Translated Title</th>
+              <th>Translation Publication Date</th>
+              <th>Translator</th>
               <th>Created By</th>
               <th> Edit Record </th>
 						</tr>

@@ -36,7 +36,7 @@ export function reviseBook(book) {
 
 
 
-export function createBook(book){
+export function createBook(book, backToDashboard){
   var updates = {};
   var newBookKey = firebase.database().ref().child('books').push().key;
   book.id = newBookKey;
@@ -44,6 +44,7 @@ export function createBook(book){
 
   return (dispatch) => {
     firebase.database().ref().update(updates, addedBook => {
+      backToDashboard();
         dispatch({
             type: CREATE_BOOK,
             book: book

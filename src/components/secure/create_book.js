@@ -21,11 +21,12 @@ class BookCreate extends Component {
         author_last_name: '',
         revised_by:'',
         translation_gap: '',
-        verified: '',
+        verified: false,
         original_lang: ''
       },
 
-      save_status:''
+      save_status:'',
+      saving: false
 
     };
   }
@@ -34,14 +35,25 @@ class BookCreate extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    //disable button and change wording to saving
-
+  //Do form validation: Original Title, Original Publication date, and original language can not be blank
+    this.setState({
+      saving: true
+    });
     const newBook = this.state.book;
     newBook.created_by = this.props.user.email;
-    this.props.createBook(newBook);
+    newBook.revised_by = '';
+    newBook.translation_gap = 0;
+    newBook.verified = false;
+    this.props.createBook(newBook, () => {
+      this.props.router.push('/dashboard');
+    });
     //enable button and clear contents
-
+    this.setState({
+      saving:false,
+      save_status: 'Saved!'
+    })
   }
+
 
   onInputChange(name, event) {
   let book = Object.assign({}, this.state.book);
@@ -141,8 +153,10 @@ class BookCreate extends Component {
 
 
 
+        {this.state.saving ? (
+          <button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0' disabled>Saving...</button>
+        ):(<button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0'>Create</button>)}
 
-        <button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0'>Create</button>
         <Link className='btn btn-primary ' to='/dashboard'>Back </Link>
         <Link className='btn btn-danger ' to='/dashboard'>Cancel </Link>
         </form>
