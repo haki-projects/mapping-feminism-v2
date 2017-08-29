@@ -5,6 +5,8 @@ import ProfileCard from '../common/profile_card';
 import BookTable from '../common/book_table';
 import { fetchBooks, fetchBook } from '../../actions/books';
 import { Modal, Button } from 'react-bootstrap';
+import BarChart from '../common/bar_chart';
+import BubbleChart from '../common/bubble_chart';
 import _ from 'lodash';
 import * as firebase from 'firebase';
 
@@ -13,24 +15,25 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
 			hasRights: true,
-		current_user: ''};
+			current_user: ''};
   }
 	componentDidMount(){
 		this.props.fetchBooks();
-	const user = firebase.auth().currentUser;
-		//set the state hasRights function
+		const user = firebase.auth().currentUser;
 	}
+
+
 
 	onViewClick(book) {
 		this.props.router.push(`/dashboard/books/view/${book.id}`);
 
 	}
 	onDeleteClick(book) {
-		console.log('insite delete button', book);
+
 
 	}
 	onEditClick(book) {
-		console.log('insite edit button', book);
+
 		this.props.router.push(`/dashboard/books/edit/${book.id}`);
 
 	}
@@ -95,19 +98,18 @@ class Dashboard extends React.Component {
 		//students will only be able to revise the records she has created by selecting it from a list
 		//only one student can enter a record. once the 'created by' field is filled in, the "edit" button should disappear.
 
+
 		return (
 			<div className='container-fluid'>
 				<h1 className='text-center'>Your Dashboard</h1>
 				<br />
-
-
-
 				<div className='row text-center'>
 					<div className='col-sm-3'>
 					<ProfileCard user = {this.props.user_details}/>
 					</div>
 					<div className='col-sm-8 justify-content-center chart-area card'>
-						Dashboard charts
+					<BubbleChart data = {this.props.bubbleChartData}/>
+
 					</div>
 				<br/>
 			</div>
@@ -126,7 +128,8 @@ function mapStateToProps(state) {
 	return {
 		books: state.books,
 		current_book: state.current_book,
-		user_details: state.auth.user_details
+		user_details: state.auth.user_details,
+		bubbleChartData: _.toArray(state.books)
 	};
 }
 

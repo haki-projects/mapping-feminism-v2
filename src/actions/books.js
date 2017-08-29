@@ -12,7 +12,6 @@ const booksRef = firebase.database().ref('/books/');
 export function fetchBooks() {
   return (dispatch) => {
     booksRef.on('value', snapshot => {
-      console.log(snapshot.val());
       dispatch({
         type: FETCH_BOOKS,
         payload: snapshot.val()
