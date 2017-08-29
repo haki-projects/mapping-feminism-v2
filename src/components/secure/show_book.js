@@ -29,15 +29,18 @@ class BookShow extends Component {
       <div className='container'>
         <div className='card'>
           <h3 className='card-header'>
-            Title: {book.english_title} <br />
+            Title: {book.original_title} <br />
             </h3>
           <div className='card-block'>
 
             <div className='card-text'>
               Author: {book.author_first_name + ' ' + book.author_last_name} <br />
-              French Title: {book.french_title} <br />
-              French Publication Date: {book.french_pub_date} <br />
-              English Publication Date: {book.english_pub_date} <br />
+              Original Title: {book.original_title} <br />
+              Translation Title: {book.translation_title} <br />
+              Original Language: {book.original_lang} <br />
+              Translator: {book.translator} <br />
+              Translation Publication Date: {book.translation_pub_date} <br />
+              original Publication Date: {book.original_pub_date} <br />
             </div>
           </div>
         <div className='card-footer'><Link className='btn btn-primary' to='/dashboard'>Back </Link> </div>

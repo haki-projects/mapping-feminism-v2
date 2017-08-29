@@ -32,9 +32,7 @@ class BookEdit extends Component {
   }
   handleSubmit(event) {
 		event.preventDefault();
-
-
-    //Send message on screen to let user know the system is working
+   //Send message on screen to let user know the system is working
     const revisedBook = this.createRevisedBook();
     this.props.reviseBook(revisedBook);
 
@@ -55,8 +53,8 @@ class BookEdit extends Component {
    newBookValues.translation_gap = this.calculateTranslationGap(newBookValues);
    //add logic for revised notification
    return newBookValues;
-
   }
+
   onInputChange(name, event) {
   let book = Object.assign({}, this.state.book);
   book[name] = event.target.value;
@@ -92,6 +90,7 @@ class BookEdit extends Component {
     }
     return <div></div>
   }
+
 
   render() {
     if(!this.props.current_book){
@@ -130,7 +129,8 @@ class BookEdit extends Component {
                         className='form-control mb-2 mr-sm-2 mb-sm-0'
                         placeholder={book.author_first_name}
                         value={this.state.book.author_first_name}
-                        onChange={this.onInputChange.bind(this,'author_first_name')} />
+                        onChange={this.onInputChange.bind(this,'author_first_name')}/>
+
               <label className='mb-2 mr-sm-2 mb-sm-0'>Author last Name</label>
                 <input type='text'
                         className='form-control mb-2 mr-sm-2 mb-sm-0'
@@ -147,7 +147,8 @@ class BookEdit extends Component {
                       className='form-control'
                       placeholder={book.original_title}
                       value={this.state.book.original_title}
-                      onChange={this.onInputChange.bind(this,'original_title')}/>
+                      onChange={this.onInputChange.bind(this,'original_title')}
+                      />
               </div>
 
                 <div className='form-group'>
@@ -178,7 +179,7 @@ class BookEdit extends Component {
               </div>
 
                 <div className='form-group'>
-                <label>Translation Publication Date</label>
+                <label>Translation Publication Date: {book.translation_pub_date}</label>
                 <input type='date'
                         className='form-control'
                         placeholder={book.translation_pub_date}
@@ -187,7 +188,7 @@ class BookEdit extends Component {
               </div>
 
               <div className='form-group'>
-              <label>Original Publication Date</label>
+              <label>Original Publication Date: {book.original_pub_date}</label>
               <input type='date'
                       className='form-control'
                       placeholder={book.original_pub_date}

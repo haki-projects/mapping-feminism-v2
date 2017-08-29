@@ -20,8 +20,19 @@ export function login(user) {
 export function assignUser(user){
 	var userDetailsRef = firebase.database().ref('/user_details/' + user.uid);
 	return (dispatch) => {
+		//Check if userDetailsRef gets a location back, if it doesnt, that means the user does not exist yet, and needs to be created, then go to the step
+		//where we send the user details to the reducer
+		userDetailsRef.once('value', snapshot => {
+			if(snapshot.val() == null){
+					firebase.database().ref('/user_details/' + user.uid).set({
+						created_on: '',
+						email: user.email,
+						role: 'STUDENT'
+					});
+			}
+		});
+
 		userDetailsRef.on('value', snapshot => {
-			console.log(snapshot.val());
 			dispatch({
 				type: ASSIGN_USER_DETAILS,
 				user_details: snapshot.val()
@@ -48,5 +59,12 @@ export function resetNext() {
 	return {
 		type: RESET_NEXT
 	}
+}
+
+function createUserDetails(user){
+	user.created_on = '';
+	user.email = user.email;
+	user.role = 'STUDENT';
+	return user;
 }
 

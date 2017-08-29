@@ -42,8 +42,10 @@ class BookCreate extends Component {
     const newBook = this.state.book;
     newBook.created_by = this.props.user.email;
     newBook.revised_by = '';
-    newBook.translation_gap = 0;
+    newBook.translation_gap = this.calculateTranslationGap;
     newBook.verified = false;
+
+
     this.props.createBook(newBook, () => {
       this.props.router.push('/dashboard');
     });
@@ -59,7 +61,17 @@ class BookCreate extends Component {
   let book = Object.assign({}, this.state.book);
   book[name] = event.target.value;
   this.setState({book});
-	}
+  }
+
+  calculateTranslationGap(book){
+    //strip the two strings and turn them into numbers, subtract and return the number
+    if(book.original_pub_date && book.translation_pub_date){
+      const originalDate = parseInt(book.original_pub_date.slice(0,4));
+      const translationDate = parseInt(book.translation_pub_date.slice(0,4));
+      return translationDate - originalDate;
+    }
+    return 0;
+  }
 
   render() {
 
