@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import Notifications, {notify} from 'react-notify-toast';
 
 export const FETCH_BOOKS = 'FETCH_BOOKS';
 export const FETCH_A_BOOK = 'FETCH_A_BOOK';
@@ -24,6 +25,7 @@ export function reviseBook(book) {
   updates['/books/'+ book.id] = book;
   return(dispatch) => {
     firebase.database().ref().update(updates, revisedBook => {
+      notify.show('Info Saved!', 'success', 3000);
       dispatch({
           type: REVISE_BOOK,
           book: book,

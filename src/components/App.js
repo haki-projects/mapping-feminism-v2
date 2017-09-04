@@ -4,6 +4,8 @@ import * as firebase from 'firebase';
 import { login, logout, resetNext, assignUser } from '../actions/auth';
 import TopNav from './common/navbar';
 import { push } from 'react-router-redux';
+import Notifications, {notify} from 'react-notify-toast';
+
 
 class App extends React.Component {
 	state = {
@@ -51,8 +53,11 @@ class App extends React.Component {
 			<div style={ this.styles.app }>
 				{ this.state.loaded ?
 					<div>
+
 					<TopNav />
+					<Notifications  options={{zIndex: 5000}}/>
 					{this.props.children}
+
 					</div> : null}
 			</div>
 		)

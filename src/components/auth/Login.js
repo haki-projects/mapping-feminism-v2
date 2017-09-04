@@ -2,6 +2,7 @@ import React from 'react';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import Notifications, { notify } from 'react-notify-toast';
 
 
 class Login extends React.Component {
@@ -13,10 +14,19 @@ class Login extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+			firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
 			.catch((error) => {
 				this.setState({ error: error });
+				notify.show(error);
 			});
+
+
+	}
+
+	validateForm(){
+		if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email))
+		notify.show("You have entered an invalid email address", "error")
+		return false;
 	}
 
 	onInputChange(name, event) {

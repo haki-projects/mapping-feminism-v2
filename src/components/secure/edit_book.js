@@ -3,6 +3,7 @@ import { fetchBooks, reviseBook, deleteBook } from '../../actions/books';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import _ from 'lodash';
+import Notifications, {notify} from 'react-notify-toast';
 
 
 class BookEdit extends Component {
@@ -31,10 +32,10 @@ class BookEdit extends Component {
     this.props.fetchBooks();
   }
   handleSubmit(event) {
-		event.preventDefault();
-   //Send message on screen to let user know the system is working
+    event.preventDefault();
     const revisedBook = this.createRevisedBook();
     this.props.reviseBook(revisedBook);
+
 
     //pass new book object to Action for updating books
   }
@@ -51,7 +52,9 @@ class BookEdit extends Component {
    });
    newBookValues.revised_by = this.props.user_details.email;
    newBookValues.translation_gap = this.calculateTranslationGap(newBookValues);
-   //add logic for revised notification
+
+   newBookValues.verified = this.state.book.verified;
+   console.log('book verified status', newBookValues.verified);
    return newBookValues;
   }
 
@@ -102,6 +105,7 @@ class BookEdit extends Component {
     return(
 
       <div className='container'>
+      <Notifications />
         <div className='card'>
           <h3 className='card-header'>
             Title: {book.original_title} <br />
@@ -111,10 +115,12 @@ class BookEdit extends Component {
           <form onSubmit={this.handleSubmit.bind(this)}>
 
           {this.props.user_details.role == 'ADMIN' ? ( <div>
-            <label className='mb-2 mr-sm-2 mb-sm-0'>Verified?</label>
+            <label className='mb-2 mr-sm-2 mb-sm-0'>Verified? {this.state.book.verified === "true" ? "Yes" : "No"}
+
+            </label>
             <select className= 'custom-select'
                 onChange={this.onInputChange.bind(this, 'verified')}>
-              <option defaultValue disabled>{book.verified}</option>
+              <option selected disabled>Choose...</option>
               <option value={true}>Yes </option>
               <option value={false}>No</option>
              </select>
@@ -160,14 +166,16 @@ class BookEdit extends Component {
                           onChange={this.onInputChange.bind(this, 'translation_title')} />
                 </div>
 
-                <div className='form-group'>
-                <label>Original Language</label>
-                <input type='text'
-                        className='form-control'
-                        placeholder={book.original_lang}
-                        value={this.state.book.original_lang}
-                        onChange={this.onInputChange.bind(this, 'original_lang')} />
-              </div>
+
+            <div className='form-group'>
+            <label>Original Language: {book.original_lang} </label> <br />
+              <select className= 'custom-select'
+                  onChange={this.onInputChange.bind(this, 'original_lang')}>
+                <option selected disabled>Choose...</option>
+                <option value='French'>French </option>
+                <option value='English'>English</option>
+              </select>
+             </div>
 
                 <div className='form-group'>
                 <label>Translator</label>
@@ -195,6 +203,7 @@ class BookEdit extends Component {
                       value={this.state.book.original_pub_date}
                       onChange={this.onInputChange.bind(this, 'original_pub_date')} />
             </div>
+
 
         <button type='submit' className='btn btn-success mb-2 mr-sm-2 mb-sm-0'>Save</button>
         <Link className='btn btn-primary ' to='/dashboard'>Back </Link>

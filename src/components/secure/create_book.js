@@ -151,10 +151,10 @@ class BookCreate extends Component {
         </div>
 
         <div className='form-group'>
-        <label>Original Language</label>
+        <label>Original Language</label> <br />
           <select className= 'custom-select'
               onChange={this.onInputChange.bind(this, 'original_lang')}>
-            <option defaultValue> Choose ...</option>
+            <option selected disabled> Choose ...</option>
             <option value='French'>French </option>
             <option value='English'>English</option>
            </select>
