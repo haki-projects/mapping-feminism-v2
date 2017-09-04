@@ -1,6 +1,7 @@
 import React from 'react';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 
 class Register extends React.Component {
@@ -27,16 +28,23 @@ class Register extends React.Component {
 	render() {
 		var errors = this.state.error ? <p> {this.state.error} </p> : '';
 		return (
-			<div>
-				<h1>Register</h1>
+			<div className = 'container'>
+				<div className='row text-center justify-content-center'>
+					<div className='col-6'>
+					<div className='card'>
+
+				<h1 className='card-header'>Register</h1>
+					<div className='card-block'>
 				<form onSubmit={this.handleSubmit.bind(this)}>
 					<label>Email <input type='email'
+															className='form-control'
 					                    placeholder='Email'
 					                    value={this.state.email}
 					                    onChange={this.onInputChange.bind(this, 'email')}
 					/></label>
 					<br/>
 					<label>Password <input type='password'
+																	className='form-control'
 					                       placeholder='Password'
 					                       value={this.state.password}
 					                       onChange={this.onInputChange.bind(this, 'password')}
@@ -44,8 +52,13 @@ class Register extends React.Component {
 
 					{errors}
 					<br/>
-					<button type='submit'>Register</button>
+					<button className='btn btn-primary' type='submit'>Register</button>
+					<Link to='/' className='btn btn-danger'>Cancel</Link>
 				</form>
+				</div>
+				</div>
+				</div>
+				</div>
 			</div>
 		);
 	}

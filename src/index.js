@@ -16,6 +16,7 @@ import BookShow from './components/secure/show_book';
 import BookEdit from './components/secure/edit_book';
 import BookCreate from './components/secure/create_book';
 import Profile from './components/secure/Profile';
+import UserEdit from './components/secure/edit_user';
 import thunk from 'redux-thunk';
 
 
@@ -49,6 +50,7 @@ ReactDOM.render(
 				<Route path='register' component={Register}/>
 				<Route path='logout' component={Logout}/>
 				<Route path='/dashboard/books/create' component={BookCreate} onEnter={secure}/>
+				<Route path='/dashboard/users/user/:id' component={UserEdit} onEnter={secure} />
 				<Route path='/dashboard/books/view/:id' component={BookShow} onEnter={secure}/>
 				<Route path='/dashboard/books/edit/:id' component={BookEdit} onEnter={secure}/>
 				<Route path='dashboard' component={Dashboard} onEnter={secure}/>

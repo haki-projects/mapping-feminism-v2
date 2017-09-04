@@ -16,7 +16,8 @@ class ProfileCard extends Component {
 
       <div>
       <div className='card card-outline-success'>
-							<div className='card-header'>{user.first_name + ' ' + user.last_name}</div>
+							<div className='card-header'>Name: {user.first_name && user.last_name ? user.first_name + ' ' + user.last_name:(<Link to='/'>Update Name</Link>)}
+							</div>
 							<div className="row align-items-center">
 								<div className="col">
 									<img className='profile-pic rounded-circle' src={require('../../../public/images/dummy_profile.png')} alt='profile'></img>
