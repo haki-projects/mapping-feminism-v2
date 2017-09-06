@@ -1,7 +1,10 @@
 import * as firebase from 'firebase';
+import Notifications, { notify } from 'react-notify-toast';
+import moment from 'moment';
 
 export const LOGIN = 'LOGIN';
 export const ASSIGN_USER_DETAILS = 'ASSIGN_USER_DETAILS';
+export const REVISE_USER = 'REVISE_USER';
 export const LOGOUT = 'LOGOUT';
 
 export const SET_NEXT = 'SET_NEXT';
@@ -16,16 +19,28 @@ export function login(user) {
 		user
 	}
 }
-
+/**
+ * Called when a user logs into the website. The function first checks to see if the user details exist in Firebase (first time log-in)
+ * If they dont exist, a user_details record is created in Firebase. After that, firebase listens for changes to this user_details location
+ * Any changes to the location (such as the reviseUser function), will dispatch ASSIGN_USER_DETAILS to the appropriate reducer
+ * @param {*} user
+ */
 export function assignUser(user){
 	var userDetailsRef = firebase.database().ref('/user_details/' + user.uid);
 	return (dispatch) => {
-		//Check if userDetailsRef gets a location back, if it doesnt, that means the user does not exist yet, and needs to be created, then go to the step
-		//where we send the user details to the reducer
 		userDetailsRef.once('value', snapshot => {
+			//User does not exist yet. create the user record
 			if(snapshot.val() == null){
 					firebase.database().ref('/user_details/' + user.uid).set({
-						created_on: '',
+						id: user.uid,
+						bio:'',
+						created_on: moment().format('YYYY MM DD'),
+						first_name: '',
+						last_name: '',
+						last_logged_in: '',
+						num_of_edits: 0,
+						num_of_entries: 0,
+						photo_url: '',
 						email: user.email,
 						role: 'STUDENT'
 					});
@@ -39,6 +54,26 @@ export function assignUser(user){
 			})
 		});
 }
+}
+
+/**
+ * Used when editing a user's details in the edit_user.js.
+ * It takes the revised user record and updates the record on Firebase
+ * @param {*} user
+ */
+export function reviseUser(user) {
+	var updates = {};
+	console.log('inside action. these are the updates passed to firebase: ', user);
+	updates['/user_details/' + user.id] = user;
+	return(dispatch) => {
+		firebase.database().ref().update(updates, revisedUser => {
+			notify.show('User Info Saved!', 'success', 3000);
+			dispatch({
+				type: REVISE_USER,
+				user: user
+			})
+		})
+	}
 }
 
 export function logout() {

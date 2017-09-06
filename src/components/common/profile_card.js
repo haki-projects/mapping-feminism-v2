@@ -16,7 +16,7 @@ class ProfileCard extends Component {
 
       <div>
       <div className='card card-outline-success'>
-							<div className='card-header'>Name: {user.first_name && user.last_name ? user.first_name + ' ' + user.last_name:(<Link to='/'>Update Name</Link>)}
+							<div className='card-header'>Name: {user.first_name && user.last_name ? user.first_name + ' ' + user.last_name:(<Link to='/dashboard/users/user/:id'>Update Name</Link>)}
 							</div>
 							<div className="row align-items-center">
 								<div className="col">
