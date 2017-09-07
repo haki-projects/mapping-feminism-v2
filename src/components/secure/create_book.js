@@ -42,7 +42,8 @@ class BookCreate extends Component {
     const newBook = this.state.book;
     newBook.created_by = this.props.user.email;
     newBook.revised_by = '';
-    newBook.translation_gap = this.calculateTranslationGap;
+    const gapNumber = this.calculateTranslationGap(newBook);
+    newBook.translation_gap = gapNumber;
     newBook.verified = false;
 
 

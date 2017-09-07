@@ -20,7 +20,7 @@ class Home extends React.Component {
             </div>
 
     <footer className="container-fluid text-center">
-      <p>Footer Text</p>
+      <p></p>
     </footer>
 
 			</div>

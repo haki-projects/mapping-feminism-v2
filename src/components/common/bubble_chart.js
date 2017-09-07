@@ -38,7 +38,7 @@ class BubbleChart extends Component {
 
 
   componentDidMount(){
-    this.createBubbleChart();
+
   }
   componentDidUpdate(){
     this.createBubbleChart();

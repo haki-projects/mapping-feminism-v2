@@ -75,6 +75,7 @@ export default connect(state => ({ next: state.auth.next, user: state.auth.user 
 		dispatch(logout());
 	},
 	onRedirect: (path) => {
+		//dispatch(this.props.router.push(path));
 		dispatch(push(path));
 	},
 	onResetNext: () => {

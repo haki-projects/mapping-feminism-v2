@@ -19,6 +19,7 @@ export function login(user) {
 		user
 	}
 }
+
 /**
  * Called when a user logs into the website. The function first checks to see if the user details exist in Firebase (first time log-in)
  * If they dont exist, a user_details record is created in Firebase. After that, firebase listens for changes to this user_details location
@@ -77,6 +78,7 @@ export function reviseUser(user) {
 }
 
 export function logout() {
+	//update user's last_logged_in function to the the current time
 	return {
 		type: LOGOUT
 
