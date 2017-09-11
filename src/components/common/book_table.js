@@ -21,7 +21,7 @@ class BookTable extends Component{
               <th>Translated Title</th>
               <th>Translation Publication Date</th>
               <th>Translator</th>
-              <th>Created By</th>
+              <th>Revised By</th>
               <th> Edit Record </th>
 						</tr>
           </thead>
