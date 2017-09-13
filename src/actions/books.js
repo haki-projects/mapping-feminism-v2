@@ -23,6 +23,7 @@ export function fetchBooks() {
 export function reviseBook(book) {
   var updates = {}; //to be populated with any other updates to the FB database
   updates['/books/'+ book.id] = book;
+  //Add update to increase the number of edits by 1
   return(dispatch) => {
     firebase.database().ref().update(updates, revisedBook => {
       notify.show('Info Saved!', 'success', 3000);

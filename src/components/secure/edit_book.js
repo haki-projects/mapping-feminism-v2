@@ -52,9 +52,7 @@ class BookEdit extends Component {
    });
    newBookValues.revised_by = this.props.user_details.email;
    newBookValues.translation_gap = this.calculateTranslationGap(newBookValues);
-
    newBookValues.verified = this.state.book.verified;
-   console.log('book verified status', newBookValues.verified);
    return newBookValues;
   }
 
