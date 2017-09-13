@@ -2,6 +2,7 @@ import React from 'react';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { getLoginError } from '../../utils/helper_functions';
 import Notifications, { notify } from 'react-notify-toast';
 
 
@@ -16,8 +17,7 @@ class Login extends React.Component {
 		event.preventDefault();
 			firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
 			.catch((error) => {
-				this.setState({ error: error });
-				notify.show(error);
+				notify.show(getLoginError(error), 'error');
 			});
 
 

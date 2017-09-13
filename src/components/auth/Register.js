@@ -2,6 +2,8 @@ import React from 'react';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { getRegisterationError } from './../../utils/helper_functions';
+import Notifications, { notify } from 'react-notify-toast';
 
 
 class Register extends React.Component {
@@ -15,7 +17,7 @@ class Register extends React.Component {
 		event.preventDefault();
 		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
 			.catch((error) => {
-				this.setState({ error: error });
+				notify.show(getRegisterationError(error), 'error');
 			});
 	}
 
