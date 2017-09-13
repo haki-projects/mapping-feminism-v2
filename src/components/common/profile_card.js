@@ -32,8 +32,7 @@ class ProfileCard extends Component {
 								<li className='list-group-item'>Last Logged in: {user.last_logged_in}</li>
 							</ul>
 							<div className='row'>
-								<div className='col'># of Entries: {user.num_of_entries}</div>
-								<div className='col'># of Edits: {user.num_of_edits}</div>
+
 							</div>
 							<Link to='/dashboard/users/user/:id'>Update profile</Link>
 
