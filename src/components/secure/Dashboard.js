@@ -107,9 +107,11 @@ class Dashboard extends React.Component {
 					<div className='col-sm-3'>
 					<ProfileCard user = {this.props.user_details}/>
 					</div>
-					<div className='col-sm-8 justify-content-center chart-area card'>
+					<div className='col-sm-6 justify-content-center chart-area card'>
 					<BubbleChart data = {this.props.bubbleChartData}/>
-
+					</div>
+					<div className='col-sm-2 justify-content-center card chart-area'> <h2> Book Details </h2>
+							<div className='book-details text-left'></div>
 					</div>
 				<br/>
 			</div>

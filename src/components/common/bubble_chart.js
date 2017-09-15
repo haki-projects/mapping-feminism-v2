@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { scaleLinear, scaleSqrt } from 'd3-scale';
 import { max } from 'd3-array';
-import { select } from 'd3-selection';
+import { select, event, transition } from 'd3-selection';
 import { forceSimulation, forceX, forceY, forceCollide } from 'd3-force';
 
 
@@ -60,6 +60,14 @@ class BubbleChart extends Component {
 
 
 
+    const toolTip = select(node)
+            .append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0)
+
+
+
+
     const books = select(node)
       .selectAll('books')
       .data(this.props.data)
@@ -69,7 +77,21 @@ class BubbleChart extends Component {
         if(d.original_lang === 'English'){return '#2196F3'};
         if(d.original_lang === 'French'){return '#795548'}
       })
+      .attr('id', d => {
+        return '_' + d.id;
+      })
       .on('click', d => { console.log(d)})
+      .on('mouseover', d => {
+        select('#_' + d.id)
+          .attr('stroke-width', '2')
+          .attr('stroke', 'black')
+          showDetails(d)
+      })
+      .on('mouseout', d => {
+        select('#_' + d.id)
+          .attr('stroke-width', '0')
+          hideDetails(d)
+      })
 
       const labels = select(node)
         .selectAll('.book-label')
@@ -91,7 +113,30 @@ class BubbleChart extends Component {
         labels
           .attr('x', d => {return d.x})
           .attr('y', d => {return d.y})
+      }
 
+      function showDetails(d) {
+       select('.book-details')
+       .html('Author: '+ d.author_first_name + ' ' + d.author_last_name + '<br />'
+          +  'Original Language: ' + d.original_lang + '<br />'
+          +  'Original Title: ' + d.original_title + '<br />'
+          +  'Original Publication Date: ' + d.original_pub_date + '<br />'
+          + '<br />'
+          +  'Translated Title: ' + d.translation_title + '<br />'
+          +  'Translation Publication Date: ' + d.translation_pub_date + '<br />'
+          +  'Translator: ' + d.translator + '<br />'
+          +  'Gap between Translations: ' + d.translation_gap + '<br />'
+
+
+
+
+
+      )
+      }
+
+      function hideDetails(d) {
+        select('.book-details')
+        .html('')
       }
   }
 
