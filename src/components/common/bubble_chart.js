@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { scaleLinear, scaleSqrt } from 'd3-scale';
-import { max } from 'd3-array';
-import { select, event, transition } from 'd3-selection';
+import { scaleSqrt } from 'd3-scale';
+import { select } from 'd3-selection';
 import { forceSimulation, forceX, forceY, forceCollide } from 'd3-force';
 
 
@@ -57,16 +56,6 @@ class BubbleChart extends Component {
           .force('collide', forceCollide(function(d) {
             return radiusScale(d.translation_gap) + 2;
           }))
-
-
-
-    const toolTip = select(node)
-            .append('div')
-            .attr('class', 'tooltip')
-            .style('opacity', 0)
-
-
-
 
     const books = select(node)
       .selectAll('books')

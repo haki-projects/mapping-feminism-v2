@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import Notifications, {notify} from 'react-notify-toast';
+import {notify} from 'react-notify-toast';
 
 export const FETCH_BOOKS = 'FETCH_BOOKS';
 export const FETCH_A_BOOK = 'FETCH_A_BOOK';

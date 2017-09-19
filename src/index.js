@@ -18,6 +18,7 @@ import BookCreate from './components/secure/create_book';
 import Profile from './components/secure/Profile';
 import UserEdit from './components/secure/edit_user';
 import MapDashboard from './components/secure/map_dashboard';
+import AuthorCreate from './components/secure/create_author';
 import thunk from 'redux-thunk';
 
 
@@ -51,6 +52,7 @@ ReactDOM.render(
 				<Route path='register' component={Register}/>
 				<Route path='logout' component={Logout}/>
 				<Route path='/mapdashboard' component={MapDashboard} onEnter={secure} />
+				<Route path='/mapdashboard/author/create' component={AuthorCreate} onEnter={secure} />
 				<Route path='/dashboard/books/create' component={BookCreate} onEnter={secure}/>
 				<Route path='/dashboard/users/user/:id' component={UserEdit} onEnter={secure} />
 				<Route path='/dashboard/books/view/:id' component={BookShow} onEnter={secure}/>

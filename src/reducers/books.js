@@ -16,7 +16,6 @@ export function books(state = {}, action) {
 }
 
 export function current_book(state = {}, action) {
-  console.log(action);
   switch (action.type) {
 
     case FETCH_A_BOOK:

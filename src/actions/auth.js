@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import Notifications, { notify } from 'react-notify-toast';
+import { notify } from 'react-notify-toast';
 import moment from 'moment';
 
 export const LOGIN = 'LOGIN';

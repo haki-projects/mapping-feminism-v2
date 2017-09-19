@@ -30,7 +30,7 @@ class Register extends React.Component {
 	render() {
 		var errors = this.state.error ? <p> {this.state.error} </p> : '';
 		return (
-			<div className = 'container'>
+			<div className='container'>
 				<div className='row text-center justify-content-center'>
 					<div className='col-6'>
 					<div className='card'>

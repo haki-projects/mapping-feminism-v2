@@ -49,3 +49,6 @@ form a {
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
 }
+.selected {
+  stroke-width: .7;
+}
