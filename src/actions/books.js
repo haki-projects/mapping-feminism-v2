@@ -47,6 +47,7 @@ export function createBook(book, backToDashboard){
   return (dispatch) => {
     firebase.database().ref().update(updates, addedBook => {
       backToDashboard();
+      notify.show('Book created!', 'success', 2000);
         dispatch({
             type: CREATE_BOOK,
             book: book

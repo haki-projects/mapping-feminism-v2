@@ -1,5 +1,6 @@
 import React, {Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchAuthorRecords } from '../../actions/authors';
 import { Link } from 'react-router';
 import AuthorMap from '../common/author_map';
 import _ from 'lodash';
@@ -9,6 +10,7 @@ import worldMapData from '../../../public/world.json';
 
 class MapDashboard extends React.Component {
   componentDidMount(){
+    this.props.fetchAuthorRecords();
 
   }
   canAddAuthor(){
@@ -30,7 +32,8 @@ class MapDashboard extends React.Component {
       <br />
       <div className='row text-center'>
         <div className='col-sm-7 chart-area card'>
-        <AuthorMap worldMapData = {worldMapData}/>
+        <AuthorMap worldMapData = {worldMapData}
+                    markerData = {this.props.author_records}/>
         </div>
 
         <div className='col-sm-4 chart-area card'>testing</div>
@@ -61,9 +64,10 @@ class MapDashboard extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user_details: state.auth.user_details
+    user_details: state.auth.user_details,
+    author_records: state.authorRecords
   }
 };
 
-export default connect(mapStateToProps)(MapDashboard);
+export default connect(mapStateToProps, { fetchAuthorRecords })(MapDashboard);
 

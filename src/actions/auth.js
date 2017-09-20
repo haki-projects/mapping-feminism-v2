@@ -64,7 +64,6 @@ export function assignUser(user){
  */
 export function reviseUser(user) {
 	var updates = {};
-	console.log('inside action. these are the updates passed to firebase: ', user);
 	updates['/user_details/' + user.id] = user;
 	return(dispatch) => {
 		firebase.database().ref().update(updates, revisedUser => {

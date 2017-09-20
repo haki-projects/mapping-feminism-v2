@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { queue, json } from 'd3-queue';
 import {geoMercator, geoPath } from 'd3-geo';
-import { select } from 'd3-selection';
+import { select, selectAll } from 'd3-selection';
 import { feature } from 'topojson-client';
 import mapData from '../../../public/world.json';
 
@@ -10,7 +10,12 @@ class AuthorMap extends Component {
   constructor(props) {
 
     super(props);
-    this.state = {}
+    this.state = {
+      marker : {
+        longitude: 2.352222,
+        latitude: 48.856614
+      }
+    }
   }
   componentDidMount(){
 
@@ -43,18 +48,26 @@ class AuthorMap extends Component {
       .attr('id', d => {return '_' + d.id;})
       .attr('d', path)
       .attr('fill', '#1E9244')
-      .attr('stroke', '#fff')
-      .attr('stroke-width', '.5')
+      .attr('stroke', '#f6f6f6')
+      .attr('stroke-width', '.3')
       .on('mouseover', d => {
-        console.log(d);
         select('#_' + d.id)
-          .attr('stroke-width', '1')
+          .attr('stroke-width', '1.5')
       })
       .on('mouseout', d =>{
         select('#_' + d.id)
-        .attr('stroke-width', '.5')
+        .attr('stroke-width', '.3')
+ })
 
-      })
+ const markers = select(node)
+      .selectAll('authors')
+      .data(this.state.marker)
+      .enter().append('circle');
+
+      const authorMarkers = markers.attr('r', 5)
+            .attr('fill', 'red')
+            .attr('cx', d => { return projection([d.longitude, d.latitude])[0]})
+            .attr('cy', d => {return projection([d.longitude, d.latitude])[1]})
 
 
   }
