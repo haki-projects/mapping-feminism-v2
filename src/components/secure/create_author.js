@@ -12,10 +12,40 @@ class AuthorCreate extends Component {
         id: '',
         author_first_name: '',
         author_last_name: '',
-        longitude:'',
-        latitude:'',
-        location_event:'',
-        color:''
+        birthplace: {
+          longitude: '',
+          latitude: '',
+          marker_color: ''
+        },
+        last_workplace: {
+          longitude: '',
+          latitude: '',
+          marker_color: ''
+        },
+        author_books: [
+          {
+            book_title: '',
+            publisher_name: '',
+            publisher_longitude: '',
+            publisher_latitude: '',
+            marker_color:''
+        },
+        {
+          book_title: '',
+          publisher_name: '',
+          publisher_longitude: '',
+          publisher_latitude: '',
+          marker_color:''
+      },
+      {
+        book_title: '',
+        publisher_name: '',
+        publisher_longitude: '',
+        publisher_latitude: '',
+        marker_color:''
+    },
+
+        ]
       },
       saving:false
     };

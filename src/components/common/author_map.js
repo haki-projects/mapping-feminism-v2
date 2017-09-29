@@ -3,6 +3,7 @@ import { queue, json } from 'd3-queue';
 import {geoMercator, geoPath } from 'd3-geo';
 import { select, selectAll } from 'd3-selection';
 import { feature } from 'topojson-client';
+import * as d3 from 'd3';
 import mapData from '../../../public/world.json';
 
 
@@ -11,11 +12,14 @@ class AuthorMap extends Component {
 
     super(props);
     this.state = {
-      marker : {
-        longitude: 2.352222,
-        latitude: 48.856614
-      }
+      markers : [
+        {
+          longitude: 2.352222,
+          latitude: 48.856614
+        }
+      ]
     }
+
   }
   componentDidMount(){
 
@@ -61,10 +65,10 @@ class AuthorMap extends Component {
 
  const markers = select(node)
       .selectAll('authors')
-      .data(this.state.marker)
+      .data(this.state.markers)
       .enter().append('circle');
 
-      const authorMarkers = markers.attr('r', 5)
+      const authorMarkers = markers.attr('r', 3)
             .attr('fill', 'red')
             .attr('cx', d => { return projection([d.longitude, d.latitude])[0]})
             .attr('cy', d => {return projection([d.longitude, d.latitude])[1]})
