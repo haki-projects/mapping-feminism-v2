@@ -26,7 +26,7 @@ export function createAuthorRecord(authorRecord, backToDashboard) {
   return (dispatch) => {
     firebase.database().ref().update(updates, addedRecord => {
       backToDashboard();
-      notify.show('Record created!', 'success', 3000);
+      notify.show('Author Record created!', 'success', 3000);
       dispatch({
         type: CREATE_AUTHOR_RECORD,
         authorRecord

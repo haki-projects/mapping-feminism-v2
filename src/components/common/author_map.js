@@ -65,13 +65,23 @@ class AuthorMap extends Component {
 
  const markers = select(node)
       .selectAll('authors')
-      .data(this.state.markers)
+      .data(this.props.markerData)
       .enter().append('circle');
 
-      const authorMarkers = markers.attr('r', 3)
+      const birthplaceMarkers = markers.attr('r', 3)
             .attr('fill', 'red')
-            .attr('cx', d => { return projection([d.longitude, d.latitude])[0]})
-            .attr('cy', d => {return projection([d.longitude, d.latitude])[1]})
+            .attr('cx', d => { return projection([d.birthplace_longitude, d.birthplace_latitude])[0]})
+            .attr('cy', d => {return projection([d.birthplace_longitude, d.birthplace_latitude])[1]})
+
+            // const publisherMarkers = markers.attr('r', 3)
+            // .attr('fill', 'black')
+            // .attr('cx', d => { return projection([d.birthplace_longitude, d.birthplace_latitude])[0]})
+            // .attr('cy', d => {return projection([d.birthplace_longitude, d.birthplace_latitude])[1]})
+
+            const lastWorkplaceMarkers = markers.attr('r', 3)
+            .attr('fill', 'brown')
+            .attr('cx', d => { return projection([d.last_workplace_longitude, d.last_workplace_latitude])[0]})
+            .attr('cy', d => {return projection([d.last_workplace_longitude, d.last_workplace_latitude])[1]})
 
 
   }

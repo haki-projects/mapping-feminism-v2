@@ -33,7 +33,9 @@ class MapDashboard extends React.Component {
       <div className='row text-center'>
         <div className='col-sm-7 chart-area card'>
         <AuthorMap worldMapData = {worldMapData}
-                    markerData = {this.props.author_records}/>
+                    markerData = {Object.keys(this.props.author_records).map(key => {
+                      return this.props.author_records[key];
+                    })}/>
         </div>
 
         <div className='col-sm-4 chart-area card'>testing</div>
@@ -65,7 +67,7 @@ class MapDashboard extends React.Component {
 function mapStateToProps(state) {
   return {
     user_details: state.auth.user_details,
-    author_records: state.authorRecords
+    author_records: _.map(state.authorRecords)
   }
 };
 
