@@ -23,22 +23,23 @@ class MapDashboard extends React.Component {
 		}
 	}
 	return <div></div>
+  }
 
-	}
+
   render() {
 
     return (<div className='container-fluid'>
       <h1 className='text-center'> Map of Authors </h1>
       <br />
       <div className='row text-center'>
-        <div className='col-sm-7 chart-area card'>
+        <div className='col-sm-12'>
         <AuthorMap worldMapData = {worldMapData}
                     markerData = {Object.keys(this.props.author_records).map(key => {
                       return this.props.author_records[key];
                     })}/>
         </div>
 
-        <div className='col-sm-4 chart-area card'>testing</div>
+
 <div>
         {this.canAddAuthor()}
 </div>
