@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import { queue, json } from 'd3-queue';
 import {geoMercator, geoPath } from 'd3-geo';
-import { select, selectAll } from 'd3-selection';
+import { select, selectAll, event } from 'd3-selection';
 import { feature } from 'topojson-client';
 import _ from 'lodash';
 import * as d3 from 'd3';
+import { behavior } from 'd3';
 import mapData from '../../../public/world.json';
 
 
@@ -39,11 +40,23 @@ class AuthorMap extends Component {
     })
   }
 
+   //define zoom function event listener
+   zoomFunction() {
+     console.log(event)
+    d3.getEvent = function(){return require('d3-selection').event}.bind(this);
+    d3.selectAll('path')
+    .attr('transform', 'translate(' + d3.getEvent.translate + ') scale (' + d3.getEvent.scale + ')');
+  }
+
+
+
   createMap() {
     const margin = {top:10, left:100, right:100, bottom:10}
     const width = 1028 - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
-    const node = this.node;
+    const node = this.node
+
+
 
     const worldData = feature(this.props.worldMapData, this.props.worldMapData.objects.countries).features;
 
@@ -51,6 +64,16 @@ class AuthorMap extends Component {
       .translate([width / 2, height / 2]);
 
     const path = geoPath().projection(projection);
+
+    //define zoom behavior
+    const zoom = d3.zoom()
+        .scaleExtent([0.2, 10])
+        .on('zoom', this.zoomFunction);
+
+    const svgContainer = select(node)
+    .style('background-color', '#575e70')
+    .style('border', '10px solid steelblue')
+    .call(zoom);
 
 
     const worldMap = select(node)
@@ -71,6 +94,7 @@ class AuthorMap extends Component {
         select('#_' + d.id)
         .attr('stroke-width', '.3')
  })
+
 
 //  const authorNames = select('.author-details').append('svg')
 //           .attr('width', 400)
@@ -126,6 +150,10 @@ const birthplaces = birthplaceMarkers.attr('r', 3)
     const projection = geoMercator()
     .translate([width / 2, height / 2]);
     //check if there is a marker for publisher 2, if so, create a line. if not, move to the next if statement
+    if(author.publisher_latitude_1 && author.publisher_longitude_1){
+      var pubXY = projection([author.publisher_longitude_1, author.publisher_latitude_1])
+
+    }
     //check if there is a marker for publisher 3, if so, create a line. if not, move to the next if statement
     //cehck if there is a marker for lastworkplace, if so, create a line
 
@@ -142,7 +170,7 @@ const birthplaces = birthplaceMarkers.attr('r', 3)
   render() {
     return (
   <div className='row'>
-      <svg style={{backgroundColor:'#575e70'}} ref={node => this.node = node} width={1028} height={500}> </svg>
+      <svg ref={node => this.node = node} width={1028} height={500}> </svg>
       <div className='col-sm-4 author-details'>{this.renderAuthors()}</div>
   </div>
   )
