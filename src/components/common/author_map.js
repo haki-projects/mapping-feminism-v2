@@ -20,6 +20,7 @@ class AuthorMap extends Component {
         }
       ],
       margin:{top:10, left:100, right:100, bottom:10},
+      authors_enabled: []
 
     }
   }
@@ -35,7 +36,10 @@ class AuthorMap extends Component {
   renderAuthors() {
     return _.map(this.props.markerData, author => {
       return(
-        <button className='btn' key = {author.id} onClick={this.onAuthorButtonClick.bind(this, author)}>{author.author_first_name + ' ' + author.author_last_name}</button>
+        <div key = {author.id}>
+        <button type='button' className='btn btn-secondary'  onClick={this.onAuthorButtonClick.bind(this, author)}>{author.author_first_name + ' ' + author.author_last_name}</button>
+        <button type='button' className='btn btn-link'  onClick={this.onAuthorHideButtonClick.bind(this, author)}>Hide</button>
+        </div>
       )
     })
   }
@@ -139,14 +143,22 @@ const publisherMarkers = svgContainer
     const node = this.node;
     const svgContainer = select(node);
     const authorGeoJson = this.getGeoJsonObj(author);
-    console.log(authorGeoJson);
+
 
     var authorPaths = svgContainer
       .append('path')
-      .attr('id', d => {return '_' + author.id;})
+      .attr('id', d => {return '_' + author.id + 'line';})
       .attr('d', gPath(authorGeoJson))
       .style('stroke', 'white')
       .attr('fill', 'none');
+
+   }
+
+   onAuthorHideButtonClick(author) {
+     //hide the path data/ remove all paths with the associated author ID
+     d3.select('#_'+ author.id + 'line')
+      .remove();
+
 
    }
 /******************************************************
