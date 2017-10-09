@@ -6,6 +6,7 @@ import AuthorMap from '../common/author_map';
 import _ from 'lodash';
 import * as firebase from 'firebase';
 import worldMapData from '../../../public/world.json';
+import AuthorTable from '../common/author_table';
 
 
 class MapDashboard extends React.Component {
@@ -25,24 +26,50 @@ class MapDashboard extends React.Component {
 	return <div></div>
   }
 
+  renderAuthorsTableData() {
+    return _.map(this.props.markerData), author => {
+        return (
+          <tr key={author.id}>
+            <td>{author.author_first_name}</td>
+            <td>{author.author_last_name}</td>
+            <td>{author.publisher_name_1}</td>
+            <td>{author.publisher_name_2}</td>
+            <td>{author.publisher_name_3}</td>
+            <td>{author}</td>
+            <td>{author}</td>
+            <td>{author}</td>
+          </tr>
+        );
+    }
+  }
+
 
   render() {
 
-    return (<div className='container-fluid'>
+    return (
+  <div className='container-fluid'>
       <h1 className='text-center'> Map of Authors </h1>
+
       <br />
-      <div className='row text-center'>
-        <div className='col-sm-12'>
+
+    <div className='row text-center'>
+      <div className='col-sm-12'>
         <AuthorMap worldMapData = {worldMapData}
                     markerData = {Object.keys(this.props.author_records).map(key => {
                       return this.props.author_records[key];
                     })}/>
-        </div>
+      </div>
+      </div>
 
+      <div>
+      {this.canAddAuthor()}
+      </div>
 
-<div>
-        {this.canAddAuthor()}
-</div>
+      <div className='row text-center'>
+      <div className='col-sm-12'>
+            Table of Author Data
+            <AuthorTable />
+      </div>
       </div>
 
 
