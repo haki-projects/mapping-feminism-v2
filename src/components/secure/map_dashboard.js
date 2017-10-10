@@ -14,33 +14,23 @@ class MapDashboard extends React.Component {
     this.props.fetchAuthorRecords();
 
   }
-  canAddAuthor(){
-		const user = this.props.user_details;
-	if (user){
-		if(user.role == 'ADMIN'){
-			return (
-				<Link to='/mapdashboard/author/create' className='btn btn success'>Add Author data </Link>
-			)
-		}
-	}
-	return <div></div>
-  }
+
 
   renderAuthorsTableData() {
-    return _.map(this.props.markerData), author => {
+    return _.map(this.props.author_table_data, author => {
         return (
           <tr key={author.id}>
             <td>{author.author_first_name}</td>
             <td>{author.author_last_name}</td>
-            <td>{author.publisher_name_1}</td>
-            <td>{author.publisher_name_2}</td>
-            <td>{author.publisher_name_3}</td>
-            <td>{author}</td>
-            <td>{author}</td>
-            <td>{author}</td>
+            <td>{author.book_title_1} - {author.publisher_name_1}</td>
+            <td>{author.book_title_2} - {author.publisher_name_2}</td>
+            <td>{author.book_title_3} - {author.publisher_name_3}</td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         );
-    }
+    })
   }
 
 
@@ -55,20 +45,18 @@ class MapDashboard extends React.Component {
     <div className='row text-center'>
       <div className='col-sm-12'>
         <AuthorMap worldMapData = {worldMapData}
+                    user_details={this.props.user_details}
                     markerData = {Object.keys(this.props.author_records).map(key => {
                       return this.props.author_records[key];
                     })}/>
       </div>
       </div>
-
-      <div>
-      {this.canAddAuthor()}
-      </div>
+      <hr />
 
       <div className='row text-center'>
       <div className='col-sm-12'>
-            Table of Author Data
-            <AuthorTable />
+           <h3> Table of Author Data </h3>
+            <AuthorTable authorData={this.renderAuthorsTableData()}/>
       </div>
       </div>
 
@@ -95,7 +83,8 @@ class MapDashboard extends React.Component {
 function mapStateToProps(state) {
   return {
     user_details: state.auth.user_details,
-    author_records: _.map(state.authorRecords)
+    author_records: _.map(state.authorRecords),
+    author_table_data: state.authorRecords
   }
 };
 

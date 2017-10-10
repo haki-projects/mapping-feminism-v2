@@ -40,7 +40,7 @@ class Dashboard extends React.Component {
 
 	canEditField(book){
 		const user = this.props.user_details;
-		if (book.created_by == user.email || user.role == 'ADMIN' || user.revised_by == user.email || book.revised_by == '') {
+		if (book.created_by == user.email || user.role == 'ADMIN' || book.revised_by == user.email || book.revised_by == '') {
 
 			return ( <div>
 				<button className='btn btn-link btn-sm' onClick={this.onEditClick.bind(this, book)}>Edit</button>

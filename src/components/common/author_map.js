@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router';
 import { queue, json } from 'd3-queue';
 import {geoMercator, geoPath } from 'd3-geo';
 import { select, selectAll, event } from 'd3-selection';
@@ -9,16 +12,12 @@ import { behavior } from 'd3';
 import mapData from '../../../public/world.json';
 
 
+
+
 class AuthorMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers : [
-        {
-          longitude: 2.352222,
-          latitude: 48.856614
-        }
-      ],
       margin:{top:10, left:100, right:100, bottom:10},
       authors_enabled: []
 
@@ -33,12 +32,40 @@ class AuthorMap extends Component {
     this.createMap();
   }
 
+  onEditClick(author){
+    this.props.router.push(`/mapdashboard/author/edit/${author.id}`);
+  }
+
+  canEditField(author){
+    const user = this.props.user_details;
+    if (author.created_by == user.email || user.role == 'ADMIN' || author.revised_by == '' || author.revised_by == user.email) {
+      return (
+            <button className='btn btn-link' onClick={this.onEditClick.bind(this, author)}>Edit</button>
+      )
+        }
+        return <div></div>
+  }
+
+  canAddAuthor(){
+    const user = this.props.user_details;
+    if (user){
+      if(user.role == 'ADMIN'){
+        return (
+          <Link to='/mapdashboard/author/create' className='btn btn-success'>Add Author data </Link>
+        )
+      }
+    }
+    return <div></div>
+  }
+
   renderAuthors() {
     return _.map(this.props.markerData, author => {
       return(
         <div key = {author.id}>
         <button type='button' className='btn btn-secondary'  onClick={this.onAuthorButtonClick.bind(this, author)}>{author.author_first_name + ' ' + author.author_last_name}</button>
         <button type='button' className='btn btn-link'  onClick={this.onAuthorHideButtonClick.bind(this, author)}>Hide</button>
+        {this.canEditField(author)}
+
         </div>
       )
     })
@@ -158,8 +185,6 @@ const publisherMarkers = svgContainer
      //hide the path data/ remove all paths with the associated author ID
      d3.select('#_'+ author.id + 'line')
       .remove();
-
-
    }
 /******************************************************
  * HELPER FUNCTIONS
@@ -257,10 +282,19 @@ const publisherMarkers = svgContainer
     return (
   <div className='row'>
       <svg ref={node => this.node = node} width={1028} height={500}> </svg>
-      <div className='col-sm-4 author-details'>{this.renderAuthors()}</div>
+      <div className='col-sm-4 author-details'>
+        {this.renderAuthors()}
+        <br/>
+        <div>{this.canAddAuthor()}</div>
+      </div>
   </div>
   )
   }
 }
+function mapStateToProps(state) {
+  return {
+    user_details: state.auth.user_details
+  }
+}
 
-export default AuthorMap;
+export default withRouter(AuthorMap);
