@@ -31,25 +31,25 @@ export function createLog(username, action, notes){
 
 function defineAction(action) {
   var actionType;
-  console.log('action passed to action dictionary: ', action);
+  console.log('action passed to action dictionary:', action);
   switch (action) {
 
-    case _.includes(action, 'revise'):
+    case 'revise':
     return 'Record Revision';
 
-    case _.includes(action, 'add'):
+    case 'add':
     return 'Record Added';
 
-    case _.includes(action, 'delete'):
+    case 'delete':
     return 'Record Deleted';
 
-    case _.includes(action, 'update'):
+    case 'update':
     return 'Profile Updated';
 
-    case _.includes(action, 'login'):
+    case 'login':
     return 'User Login';
 
-    case _.includes(action, 'logout'):
+    case 'logout':
     return 'User Logout';
 
     default:

@@ -33,6 +33,19 @@ export function reviseAuthor(author) {
   }
 }
 
+export function setUserNumberOfEntries(user){
+	console.log('this is the user object passed when logging in:', user);
+	var updates ={};
+	updates['/user_details/' + user.id + '/' + 'num_of_edits'] = user.num_of_edits + 1;
+	return(dispatch) => {
+		firebase.database().ref().update(updates, revisedUser => {
+			dispatch({
+				type: 'UPDATE_USER_NUM_OF_EDITS',
+			})
+		})
+	}
+}
+
 export function createAuthorRecord(authorRecord, backToDashboard) {
   var updates ={};
   var newAuthorRecordKey = firebase.database().ref().child('authors').push().key; //let firebase generate a key for new record

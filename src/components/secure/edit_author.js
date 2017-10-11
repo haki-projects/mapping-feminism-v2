@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fetchAuthorRecords, reviseAuthor } from '../../actions/authors';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { setUserNumberOfEntries } from '../../utils/secure';
 import _ from 'lodash';
 import Notifications, {notify} from 'react-notify-toast';
 import { createLog } from '../../utils/logger';
@@ -53,12 +54,15 @@ class AuthorEdit extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const revisedAuthor = this.createRevisedAuthor();
-    console.log(revisedAuthor)
-   this.props.reviseAuthor(revisedAuthor);
-   createLog(
-     this.props.user_details.email,
-     'revise',
-     'Author record changed: ' + this.props.current_author.author_first_name + ' ' + this.props.current_author.author_last_name);
+
+    this.props.reviseAuthor(revisedAuthor);
+
+    //update log and update user details (eventually combine these updates into one function?)
+    createLog(
+      this.props.user_details.email,'revise',
+      'Author record changed: ' + revisedAuthor.author_first_name + ' ' + revisedAuthor.author_last_name);
+    setUserNumberOfEntries(this.props.user_details);
+
   }
 
   createRevisedAuthor() {

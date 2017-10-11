@@ -17,6 +17,7 @@ import BookEdit from './components/secure/edit_book';
 import AuthorEdit from './components/secure/edit_author';
 import BookCreate from './components/secure/create_book';
 import Profile from './components/secure/Profile';
+import AdminDashboard from './components/secure/admin_dashboard';
 import UserEdit from './components/secure/edit_user';
 import MapDashboard from './components/secure/map_dashboard';
 import AuthorCreate from './components/secure/create_author';
@@ -52,6 +53,7 @@ ReactDOM.render(
 				<Route path='login' component={Login}/>
 				<Route path='register' component={Register}/>
 				<Route path='logout' component={Logout}/>
+				<Route path='/admindashboard' component={AdminDashboard} onEnter={secure} />
 				<Route path='/mapdashboard' component={MapDashboard} onEnter={secure} />
 				<Route path='/mapdashboard/author/create' component={AuthorCreate} onEnter={secure} />
 				<Route path='/mapdashboard/author/edit/:id' component={AuthorEdit} onEnter={secure} />

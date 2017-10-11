@@ -20,10 +20,17 @@ this.loggedIn();
         <li className='nav-item nav-link'>
           Welcome {this.props.user_details.first_name}!
           </li>
+          <li className='nav-item'>
+          <Link to='/mapdashboard' className='nav-link'> Author Map </Link>
+        </li>
+        <li className='nav-item'>
+        <Link to='/dashboard' className='nav-link'> Book Chart</Link>
+      </li>
         <li className='nav-item'>
           <Link to='/logout' className='nav-link'> Logout </Link>
         </li>
         <li className='nav-item'>
+
 
       </li>
       </ul>

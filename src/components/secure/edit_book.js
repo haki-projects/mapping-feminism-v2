@@ -3,6 +3,7 @@ import { fetchBooks, reviseBook, deleteBook } from '../../actions/books';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import _ from 'lodash';
+import { createLog } from '../../utils/logger';
 import Notifications, {notify} from 'react-notify-toast';
 
 
@@ -35,6 +36,9 @@ class BookEdit extends Component {
     event.preventDefault();
     const revisedBook = this.createRevisedBook();
     this.props.reviseBook(revisedBook);
+    createLog(
+      this.props.user_details.email,'revise',
+      'Book record changed: ' + revisedBook.original_title);
 
 
     //pass new book object to Action for updating books

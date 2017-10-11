@@ -20,6 +20,8 @@ export function login(user) {
 	}
 }
 
+
+
 /**
  * Called when a user logs into the website. The function first checks to see if the user details exist in Firebase (first time log-in)
  * If they dont exist, a user_details record is created in Firebase. After that, firebase listens for changes to this user_details location
@@ -76,6 +78,19 @@ export function reviseUser(user) {
 	}
 }
 
+export function setUserLoginTime(user){
+	console.log('this is the user object passed when logging in:', user);
+	var updates ={};
+	updates['/user_details/' + user.uid + '/' + 'last_logged_in'] = moment().format('MMMM Do YYYY, h:mm:ss a');
+	return(dispatch) => {
+		firebase.database().ref().update(updates, revisedUser => {
+			dispatch({
+				type: 'UPDATE_USER_LOGIN_TIME',
+			})
+		})
+	}
+}
+
 export function logout() {
 	//update user's last_logged_in function to the the current time
 	return {
@@ -83,6 +98,8 @@ export function logout() {
 
 	}
 }
+
+
 
 
 export function setNext(next) {

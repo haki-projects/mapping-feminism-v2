@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
-import { login, logout, resetNext, assignUser } from '../actions/auth';
+import { login, logout, resetNext, assignUser, setUserLoginTime } from '../actions/auth';
 import TopNav from './common/navbar';
 import { push } from 'react-router-redux';
 import Notifications, {notify} from 'react-notify-toast';
@@ -67,6 +67,8 @@ class App extends React.Component {
 export default connect(state => ({ next: state.auth.next, user: state.auth.user }), dispatch => ({
 	onLogin: user => {
 		dispatch(login(user));
+		dispatch(setUserLoginTime(user));
+
 	},
 	assignUserDetails: user => {
 		dispatch(assignUser(user)); //action to assign user details to user
