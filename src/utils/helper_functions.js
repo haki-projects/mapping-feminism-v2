@@ -7,6 +7,7 @@ const ACCOUNT_ALREADY_EXISTS = 'auth/email-already-in-use';
 const INVALID_EMAIL = 'auth/invalid-email';
 const EMAIL_AUTH_DISABLED = 'auth/operation-not-allowed';
 const WEAK_PASSWORD = 'auth/weak-password';
+import * as firebase from 'firebase';
 
 
 export function getRegisterationError(error) {
@@ -52,6 +53,20 @@ export function getLoginError(error) {
     default:
     return 'An error occured while logging you in: ' + error.message;
   };
+
+}
+
+export function isAdmin(userID){
+  const userRef = firebase.database().ref('/user_details/' + userID);
+  userRef.once('value', snapshot => {
+    if (snapshot.val().role === 'ADMIN'){
+      console.log('returning true');
+      return true;
+    } else {
+      console.log('returning false');
+      return false;
+    }
+  })
 
 }
 

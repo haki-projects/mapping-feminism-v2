@@ -53,7 +53,7 @@ ReactDOM.render(
 				<Route path='login' component={Login}/>
 				<Route path='register' component={Register}/>
 				<Route path='logout' component={Logout}/>
-				<Route path='/admindashboard' component={AdminDashboard} onEnter={secure} />
+				<Route path='/admindashboard' component={AdminDashboard} onEnter={adminOnly} />
 				<Route path='/mapdashboard' component={MapDashboard} onEnter={secure} />
 				<Route path='/mapdashboard/author/create' component={AuthorCreate} onEnter={secure} />
 				<Route path='/mapdashboard/author/edit/:id' component={AuthorEdit} onEnter={secure} />

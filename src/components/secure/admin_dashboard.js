@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAdminRecords, fetchAllUserDetails } from '../../actions/admin';
 import _ from 'lodash';
+import BarChart from '../common/bar_chart';
+
+
 
 class AdminDashboard extends Component {
   constructor(props){
@@ -12,6 +15,8 @@ class AdminDashboard extends Component {
     this.props.fetchAdminRecords();
     this.props.fetchAllUserDetails();
 
+  }
+  componentDidUpdate(){
   }
 
   renderLogs(){
@@ -41,9 +46,32 @@ class AdminDashboard extends Component {
     });
   }
 
+  getBarData(){
+
+  }
+
+
   render(){
     return(
       <div className='container'>
+      <div>
+        <h2 className='text-center'> Admin Dashboard </h2>
+      </div>
+
+
+      <div className='row'>
+          <BarChart
+            data={Object.keys(this.props.barChartData).map(key => {
+              return this.props.barChartData[key];
+            })}
+             />
+
+     <div className='col-sm-3 text-center bar-chart-details'></div>
+      </div>
+
+      <br />
+
+
       <div>
       <h3>Users Summary</h3>
         <table className='table table-sm'>
@@ -94,7 +122,8 @@ function mapStateToProps(state) {
   return {
     user_details: state.auth.user_details,
     all_users_details: state.userDetailsRecords,
-    logData: state.adminRecords
+    logData: state.adminRecords,
+    barChartData: state.userDetailsRecords
   }
 }
 

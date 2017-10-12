@@ -133,7 +133,13 @@ class AuthorMap extends Component {
       .attr('fill', 'red')
       .attr('id', d => {return '_' + d.id;})
       .attr('cx', d => { return projection([d.birthplace_longitude, d.birthplace_latitude])[0]})
-      .attr('cy', d => {return projection([d.birthplace_longitude, d.birthplace_latitude])[1]});
+      .attr('cy', d => {return projection([d.birthplace_longitude, d.birthplace_latitude])[1]})
+      .on('click', d => {
+        this.onAuthorButtonClick(d)})
+      .on('mouseout', d => {
+        this.onAuthorHideButtonClick(d)
+
+      })
 
 const lastWorkplaceMarkers = svgContainer
       .selectAll('workplace')
@@ -160,6 +166,10 @@ const publisherMarkers = svgContainer
 
 
   onAuthorButtonClick(author) {
+    this.showDetails(author);
+    selectAll('#_' + author.id)
+    .attr('stroke-width', '1')
+    .attr('stroke', 'white')
     const margin = {top:10, left:100, right:100, bottom:10}
     const width = 1028 - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
@@ -183,8 +193,27 @@ const publisherMarkers = svgContainer
 
    onAuthorHideButtonClick(author) {
      //hide the path data/ remove all paths with the associated author ID
+     this.hideDetails(author);
+     selectAll('#_' + author.id)
+     .attr('stroke-width', '0')
+     .attr('stroke', 'white')
      d3.select('#_'+ author.id + 'line')
       .remove();
+   }
+
+   showDetails(author){
+    select('.single-author-details')
+    .html('Author: '+ author.author_first_name + ' ' + author.author_last_name + '<br />'
+       +  'Book Title & Publisher: ' + author.book_title_1 + ' - ' + author.publisher_name_1 + '<br />'
+       +  'Book Title & Publisher: ' + author.book_title_2 + ' - ' + author.publisher_name_2 + '<br />'
+       +  'Book Title & Publisher: ' + author.book_title_3 + ' - ' + author.publisher_name_3 + '<br />'
+       +  'Last Place of work: ' + author.last_workplace_name + '<br />'+ '<br />'
+   )
+
+   }
+   hideDetails(author){
+     select('.single-author-details').html('')
+
    }
 /******************************************************
  * HELPER FUNCTIONS

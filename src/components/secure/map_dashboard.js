@@ -52,6 +52,18 @@ class MapDashboard extends React.Component {
       </div>
       </div>
       <hr />
+      <div className='row text-center'>
+      <div className='col-sm-12 justify-content-center card chart-area'>
+      <br />
+        <h3>Author Details</h3>
+
+        <div className='single-author-details text-left card-body'></div>
+
+
+
+
+      </div>
+    </div>
 
       <div className='row text-center'>
       <div className='col-sm-12'>

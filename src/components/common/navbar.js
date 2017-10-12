@@ -26,6 +26,10 @@ this.loggedIn();
         <li className='nav-item'>
         <Link to='/dashboard' className='nav-link'> Book Chart</Link>
       </li>
+      {this.props.user_details.role == 'ADMIN' ? (
+        <li className='nav-item'><Link to='/admindashboard' className='nav-link'>Admin</Link></li>)
+        : (<p></p>)
+      }
         <li className='nav-item'>
           <Link to='/logout' className='nav-link'> Logout </Link>
         </li>

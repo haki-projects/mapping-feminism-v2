@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 import * as config from '../../firebase.config.js';
 import { setNext } from '../actions/auth';
+import { isAdmin } from '../utils/helper_functions';
 
 firebase.initializeApp(config);
 
@@ -27,7 +28,7 @@ export function requireAuth(store) {
 //TODO: hook this up within rest of code.
 export function requireAuthAndAdmin(store){
 	return function (nextState, replace) {
-		if (firebase.auth().currentUser === null  || firebase.auth().currentUser.role !== 'Administrator') {
+		if (firebase.auth().currentUser === null || isAdmin(firebase.auth().currentUser.uid) == false) {
 			store.dispatch(setNext(nextState.location.pathname));
 			replace({
 				pathname: '/login', //for now, send them back to the login screen in order to log in as an admin
