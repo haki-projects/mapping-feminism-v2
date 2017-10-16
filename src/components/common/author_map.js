@@ -38,7 +38,7 @@ class AuthorMap extends Component {
 
   canEditField(author){
     const user = this.props.user_details;
-    if (author.created_by == user.email || user.role == 'ADMIN' || author.revised_by == '' || author.revised_by == user.email) {
+    if (author.created_by == user.email || user.role == 'ADMIN' || user.role == 'STUDENT' || author.revised_by == '' || author.revised_by == user.email) {
       return (
             <button className='btn btn-link' onClick={this.onEditClick.bind(this, author)}>Edit</button>
       )
