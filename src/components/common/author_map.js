@@ -314,7 +314,7 @@ const publisherMarkers = svgContainer
       <div className='col-sm-4 author-details'>
         {this.renderAuthors()}
         <br/>
-        <div>{this.canAddAuthor()}</div>
+        <div><Link to='/mapdashboard/author/create' className='btn btn-success'>Add Author data </Link></div>
       </div>
   </div>
   )
