@@ -17,7 +17,9 @@ class Home extends React.Component {
       </div>
     </div>
           <div className='container'>
-            </div>
+
+
+          </div>
 
     <footer className="container-fluid text-center">
       <p></p>

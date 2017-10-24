@@ -40,12 +40,22 @@ export function requireAuthAndAdmin(store){
 export function setUserNumberOfEntries(user){
 	console.log('this is the user object passed when entry edited:', user);
 	var updates ={};
-	updates['/user_details/' + user.id + '/' + 'num_of_edits'] = user.num_of_edits + 1;
+	updates['/user_details/' + user.id + '/' + 'num_of_entries'] = parseInt(user.num_of_entries) + 1;
 
 		firebase.database().ref().update(updates, revisedUser => {
 
 		})
 	}
+
+	export function setUserNumberOfEdits(user){
+		console.log('this is the user object passed when entry edited:', user);
+		var updates ={};
+		updates['/user_details/' + user.id + '/' + 'num_of_edits'] = parseInt(user.num_of_edits) + 1;
+
+			firebase.database().ref().update(updates, revisedUser => {
+
+			})
+		}
 
 
 

@@ -61,12 +61,13 @@ class AuthorMap extends Component {
   renderAuthors() {
     return _.map(this.props.markerData, author => {
       return(
-        <div key = {author.id}>
-        <button type='button' className='btn btn-secondary'  onClick={this.onAuthorButtonClick.bind(this, author)}>{author.author_first_name + ' ' + author.author_last_name}</button>
+        <li className='list-group-item' key = {author.id}>
+
+        <button type='button' className='btn btn-secondary' onClick={this.onAuthorButtonClick.bind(this, author)}>{author.author_first_name + ' ' + author.author_last_name}</button>
         <button type='button' className='btn btn-link'  onClick={this.onAuthorHideButtonClick.bind(this, author)}>Hide</button>
         {this.canEditField(author)}
 
-        </div>
+        </li>
       )
     })
   }
@@ -311,8 +312,10 @@ const publisherMarkers = svgContainer
     return (
   <div className='row'>
       <svg ref={node => this.node = node} width={1028} height={500}> </svg>
-      <div className='col-sm-4 author-details'>
+      <div className='col-sm-3 author-details'>
+      <ul className='list-group'>
         {this.renderAuthors()}
+      </ul>
         <br/>
         <div><Link to='/mapdashboard/author/create' className='btn btn-success'>Add Author data </Link></div>
       </div>

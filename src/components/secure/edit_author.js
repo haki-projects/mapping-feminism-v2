@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { fetchAuthorRecords, reviseAuthor } from '../../actions/authors';
+import { fetchAuthorRecords, reviseAuthor, deleteAuthor } from '../../actions/authors';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { setUserNumberOfEntries } from '../../utils/secure';
+import { setUserNumberOfEdits } from '../../utils/secure';
 import _ from 'lodash';
 import Notifications, {notify} from 'react-notify-toast';
 import { createLog } from '../../utils/logger';
@@ -61,7 +61,7 @@ class AuthorEdit extends Component {
     createLog(
       this.props.user_details.email,'revise',
       'Author record changed: ' + revisedAuthor.author_first_name + ' ' + revisedAuthor.author_last_name);
-    setUserNumberOfEntries(this.props.user_details);
+    setUserNumberOfEdits(this.props.user_details);
 
   }
 
@@ -87,6 +87,13 @@ class AuthorEdit extends Component {
   }
 
   onDeleteClick(){
+    this.props.deleteAuthor(this.props.current_author.id, () => {
+      this.props.router.push('/mapdashboard');
+    })
+
+    createLog(
+      this.props.user_details.email,'delete',
+      'Author record deleted: ' + this.props.current_author.author_first_name + ' ' + this.props.current_author.author_last_name);
 
   }
 
@@ -312,6 +319,8 @@ render() {
 
 
         </form>
+        <hr />
+        {this.canDelete()}
         </div>
         </div>
 
@@ -341,4 +350,4 @@ function mapStateToProps(state, ownProps) {
     current_author: state.authorRecords[id]
   };
 }
-export default connect(mapStateToProps, { fetchAuthorRecords, reviseAuthor }) (AuthorEdit);
+export default connect(mapStateToProps, { fetchAuthorRecords, reviseAuthor, deleteAuthor }) (AuthorEdit);

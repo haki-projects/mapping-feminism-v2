@@ -59,7 +59,7 @@ class BarChart extends Component {
       .append('rect')
       .attr('class', 'bar')
       .attr('x', 120)
-      .attr('y', function(d){return yScale(d.email);})
+      .attr('y', function(d){return yScale(d.email) ;})
       .attr('id', d => {return '_' + d.id + 'bar';})
       .attr('height', yScale.bandwidth())
       .attr('width', function(d) {return xScale(d.num_of_edits);})

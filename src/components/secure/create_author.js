@@ -3,6 +3,8 @@ import { createAuthorRecord } from '../../actions/authors';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import _ from 'lodash';
+import { createLog } from '../../utils/logger';
+import { setUserNumberOfEntries } from '../../utils/secure';
 
 class AuthorCreate extends Component {
   constructor(props){
@@ -59,6 +61,12 @@ class AuthorCreate extends Component {
     this.props.createAuthorRecord(newAuthorRecord, () => {
       this.props.router.push('/mapdashboard');
     });
+
+    createLog(
+      this.props.user.email,'add',
+      'Author record added: ' + newAuthorRecord.author_first_name + ' ' + newAuthorRecord.author_last_name);
+
+      setUserNumberOfEntries(this.props.user);
 
     this.setState({
       saving:false

@@ -40,6 +40,7 @@ class AdminDashboard extends Component {
           <td>{user.first_name}</td>
           <td>{user.last_name}</td>
           <td>{user.num_of_edits}</td>
+          <td>{user.num_of_entries}</td>
           <td>{user.last_logged_in}</td>
         </tr>
       );
@@ -81,6 +82,7 @@ class AdminDashboard extends Component {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Num. of Edits</th>
+              <th>Num. of Entries</th>
               <th>Last Logged In</th>
             </tr>
           </thead>
