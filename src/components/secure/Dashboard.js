@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
 
 
 		return (
-			<div className='container-fluid'>
+			<div className='container'>
 				<h1 className='text-center'>Your Dashboard</h1>
 				<br />
 				<div className='row text-center'>
