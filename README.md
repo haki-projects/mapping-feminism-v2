@@ -1,7 +1,4 @@
-# react-redux-router-firebase
-
-Boilerplate for React & Redux, integrated with Firebase authentication.
-
+# Mapping Languages v2
 
 
 ## Usage
